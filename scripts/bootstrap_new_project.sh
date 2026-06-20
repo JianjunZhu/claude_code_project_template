@@ -70,6 +70,10 @@ TEMPLATE_ROOT="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel 2>/dev/null)" \
 git -C "$TEMPLATE_ROOT" rev-parse --verify --quiet "${REF}^{commit}" >/dev/null \
   || die "模板中不存在 ref：$REF"
 
+# 校验 git 身份（开跑前快速失败，避免留下半成品目录）
+git -C "$TEMPLATE_ROOT" config user.email >/dev/null 2>&1 \
+  || die "git 身份未配置：请先 git config --global user.name \"你的名字\" 与 user.email \"you@example.com\""
+
 # 目标目录（默认 ../<名称>）
 [[ -n "$DIR" ]] || DIR="$(dirname "$TEMPLATE_ROOT")/$NAME"
 if [[ -e "$DIR" ]]; then
@@ -125,10 +129,6 @@ fi
 # 重置为全新 git 历史
 git -C "$DIR" init -q -b main 2>/dev/null \
   || { git -C "$DIR" init -q; git -C "$DIR" symbolic-ref HEAD refs/heads/main; }
-
-# 提交前校验 git 身份
-git -C "$DIR" config user.email >/dev/null 2>&1 \
-  || die "git 身份未配置：请先 git config --global user.name \"你的名字\" 与 user.email \"you@example.com\""
 
 git -C "$DIR" add -A
 git -C "$DIR" commit -q \
