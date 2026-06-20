@@ -283,7 +283,19 @@
 
 ---
 
-## 16. 相关文档索引
+## 16. 汇报与沟通方式
+
+回复与汇报遵循**先结论、后细节**的顺序，同时照顾"快速读懂全局"与"深入核对细节"两种需求。
+
+- **先一句话通俗结论**：用最朴素的语言（不堆术语）先说清——做了什么 / 现在是什么状态 / 是否成功 / 下一步是什么，让用户不读细节也能掌握全局。
+- **再分层展开细节**：随后给出关键结果、改动清单、命令、证据与取舍等，供需要核对的人深入。
+- **结构清晰（倒金字塔）**：较长的汇报用小标题 / 列表 / 表格分层，最重要的放最前面。
+- **诚实优先于好看**：成败与未决项放在前面如实说明——失败、跳过的步骤、未验证的结论不得埋在细节里（与第 3 节不得编造、第 5 节科研安全表达一致）。
+- **结论绑定证据等级**：涉及科研结果时，通俗结论也要匹配证据等级，不把 `PENDING` / `NOT VERIFIED` 说成既成事实。
+
+---
+
+## 17. 相关文档索引
 
 核心文档：
 - [`docs/PROJECT.md`](docs/PROJECT.md) — 当前项目事实与状态
@@ -298,6 +310,7 @@
 - [`README.md`](README.md) — 模板概览
 
 任务类型配置（[`configs/task_types/`](configs/task_types/)）：
+- [`foundation_model.md`](configs/task_types/foundation_model.md)
 - [`segmentation.md`](configs/task_types/segmentation.md)
 - [`completion.md`](configs/task_types/completion.md)
 - [`detection.md`](configs/task_types/detection.md)

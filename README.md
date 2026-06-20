@@ -38,6 +38,7 @@ claude_code_project_template/
 │   └── TEMPLATE_CHANGELOG.md          # 模板自身的变更记录
 ├── configs/
 │   └── task_types/                    # 各任务类型的配置说明（按需启用）
+│       ├── foundation_model.md
 │       ├── segmentation.md
 │       ├── completion.md
 │       ├── detection.md
