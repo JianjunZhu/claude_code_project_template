@@ -55,7 +55,8 @@
 3. `docs/PAPER_NOTES.md`（写作笔记与贡献点）。
 4. `docs/PROJECT.md` 与 `docs/TASK_BRIEF.md`（项目事实与范围）。
 5. `docs/RESEARCH_RULES.md`（科研安全表达纪律）。
-6. `CLAUDE.md`（Agent 行为规则）。
+6. `docs/RESEARCH_LOOP.md`（迭代研究循环协议：以"完成论文"为终点的执行 / 检查 / 修订闭环）。
+7. `CLAUDE.md`（Agent 行为规则）。
 
 ## 7. 典型输出
 

@@ -202,7 +202,7 @@
 
 ## 12. 新任务流程（8 步）
 
-接到新任务时，按序执行（默认以第 15 节 ultracode 强度执行：实质性、多步骤任务主动起 Workflow 编排并对关键结论做对抗式验证）：
+接到新任务时，按序执行（默认以第 15 节 ultracode 强度执行：实质性、多步骤任务主动起 Workflow 编排并对关键结论做对抗式验证；科研类任务——文献 / 写作 / 评审——优先调用第 17 节所列技能；**以产出论文为终点的任务，按 [`docs/RESEARCH_LOOP.md`](docs/RESEARCH_LOOP.md) 起迭代研究循环**）：
 
 1. 在 [`docs/TASK_BRIEF.md`](docs/TASK_BRIEF.md) **创建或更新**任务简报：目标、范围、输入/输出、验收标准、预期证据等级。
 2. 对照 [`docs/PROJECT.md`](docs/PROJECT.md) 确认所需事实是否已知；未知处用占位符并向用户求证。
@@ -295,12 +295,37 @@
 
 ---
 
-## 17. 相关文档索引
+## 17. 科研技能的主动使用
+
+本机（用户级 `~/.claude/skills/`）已安装科研技能套件 `academic-research-skills`（含 `deep-research`、`academic-paper`、`academic-paper-reviewer`、`academic-pipeline`；许可 CC-BY-NC，仅非商用并需署名）。遇到对应科研任务时**主动调用**相应技能完成，而不是从零手写。
+
+技能 → 任务映射：
+
+| 任务 | 优先调用的技能 |
+|---|---|
+| 文献调研 / 综述 / 事实核查 / 系统综述（PRISMA） | `deep-research` |
+| 论文 / 手稿写作、大纲、改稿、摘要、格式转换 | `academic-paper` |
+| 同行评审 / 投稿前自检 / 方法学审查 | `academic-paper-reviewer` |
+| 端到端"研究 → 写作 → 评审"流水 | `academic-pipeline` |
+
+使用纪律（**技能不豁免本模板的科研纪律**）：
+
+- **主动但不盲从**：技能是工具 / copilot，其产出仍须过本文件的证据与防造假规则——`deep-research` 的引用必须真实可核验，**不得编造文献**；写作产出中的指标 / 结论须能追溯到 `docs/EVIDENCE.md`，未验证标 `PENDING` / `NOT VERIFIED`。
+- **评审产出是参考意见**：`academic-paper-reviewer` 的评分 / 结论是参考，非客观事实。
+- **产出归档对位**：综述 → `docs/PAPER_NOTES.md` / `docs/EVIDENCE.md`，写作 → 草稿，评审 → 记录；并注明"由 `<技能名>` 生成"。
+- **环境降级要诚实**：若当前环境未安装该技能（如某些 headless / CI 环境），如实说明并降级为手工流程，**不假装已调用**。
+- **许可边界**：CC-BY-NC 仅非商用；涉及商用 / 可能转化的项目先与用户确认。
+- **自有技能另置**：项目自有技能（自己写的）放仓库内 `.claude/skills/` 并提交，可随派生项目继承；第三方插件以本机安装或 `settings.json` 声明引入，不复制进仓库。
+
+---
+
+## 18. 相关文档索引
 
 核心文档：
 - [`docs/PROJECT.md`](docs/PROJECT.md) — 当前项目事实与状态
 - [`docs/TASK_BRIEF.md`](docs/TASK_BRIEF.md) — 当前任务简报
 - [`docs/RESEARCH_RULES.md`](docs/RESEARCH_RULES.md) — 科研纪律细则
+- [`docs/RESEARCH_LOOP.md`](docs/RESEARCH_LOOP.md) — 迭代研究循环控制协议（论文产出主工作流）
 - [`docs/EVIDENCE.md`](docs/EVIDENCE.md) — 结论与证据（含证据等级）
 - [`docs/EXPERIMENT_LOG.md`](docs/EXPERIMENT_LOG.md) — 实验过程记录
 - [`docs/RESULT_AUDIT.md`](docs/RESULT_AUDIT.md) — 结果审计
