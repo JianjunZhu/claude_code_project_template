@@ -42,15 +42,17 @@ EOF
 }
 
 die() { printf 'ERROR: %s\n' "$1" >&2; exit 1; }
+# 取值型参数校验：值缺失或以 - 开头（多半是漏写了值、误吞了下一个参数）即报错
+need_val() { [[ -n "${2:-}" && "${2:-}" != -* ]] || die "$1 需要一个值（且不能以 - 开头）；用 -h 查看用法"; }
 
 NAME=""; DIR=""; REF="HEAD"; TASKTYPE=""; REMOTE=""; FORCE=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    -n|--name)      NAME="${2:-}"; shift 2;;
-    -d|--dir)       DIR="${2:-}"; shift 2;;
-    -r|--ref)       REF="${2:-}"; shift 2;;
-    -t|--task-type) TASKTYPE="${2:-}"; shift 2;;
-    --remote)       REMOTE="${2:-}"; shift 2;;
+    -n|--name)      need_val "$1" "${2:-}"; NAME="$2"; shift 2;;
+    -d|--dir)       need_val "$1" "${2:-}"; DIR="$2"; shift 2;;
+    -r|--ref)       need_val "$1" "${2:-}"; REF="$2"; shift 2;;
+    -t|--task-type) need_val "$1" "${2:-}"; TASKTYPE="$2"; shift 2;;
+    --remote)       need_val "$1" "${2:-}"; REMOTE="$2"; shift 2;;
     -f|--force)     FORCE=1; shift;;
     -h|--help)      usage; exit 0;;
     *)              die "未知参数：$1（用 -h 查看用法）";;
@@ -90,9 +92,9 @@ if [[ -n "$TASKTYPE" && ! -f "$TEMPLATE_ROOT/configs/task_types/${TASKTYPE}.md" 
   printf 'WARN: 未找到 configs/task_types/%s.md（仍记录，请确认拼写）。\n' "$TASKTYPE" >&2
 fi
 
-# 采集派生信息（真实可追溯事实）
-SRC_HASH="$(git -C "$TEMPLATE_ROOT" rev-parse "$REF")"
-SRC_SHORT="$(git -C "$TEMPLATE_ROOT" rev-parse --short "$REF")"
+# 采集派生信息（真实可追溯事实）；解引用到提交，注解标签也记录其指向的 commit hash
+SRC_HASH="$(git -C "$TEMPLATE_ROOT" rev-parse "${REF}^{commit}")"
+SRC_SHORT="$(git -C "$TEMPLATE_ROOT" rev-parse --short "${REF}^{commit}")"
 SRC_DESC="$(git -C "$TEMPLATE_ROOT" describe --tags --always "$REF" 2>/dev/null || echo "$SRC_SHORT")"
 DATE="$(date +%F)"
 
