@@ -1,6 +1,6 @@
 # scripts/ 脚本目录约定
 
-> 本文件描述本项目脚本目录的组织规则。本模板于 2026-06-19 创建。除模板基础设施脚本 `bootstrap_new_project.sh`（从模板派生新项目，运行 `bash scripts/bootstrap_new_project.sh -h` 查看用法）外，**当前目录内没有任何项目脚本**（训练 / 评估 / 数据处理等），下文均为占位约定。
+> 本文件描述本项目脚本目录的组织规则。本模板于 2026-06-19 创建。除模板基础设施脚本 `bootstrap_new_project.sh`（从模板派生新项目）与 `update_from_template.sh`（把模板规则更新到本项目）外，**当前目录内没有任何项目脚本**（训练 / 评估 / 数据处理等），下文均为占位约定。
 
 本目录用于存放训练、评估、数据处理、绘图等脚本。源码与轻量脚本入 git。
 
@@ -56,4 +56,6 @@
 
 - 项目脚本（训练 / 评估 / 数据处理等）：无（空模板）
 - 模板基础设施脚本：`bootstrap_new_project.sh` —— 从模板一键派生新项目（导出指定 ref、重置 git 历史、写入可追溯派生信息）；用法见 `bash scripts/bootstrap_new_project.sh -h`。
+- 模板基础设施脚本：`update_from_template.sh` —— 把模板的规则文件更新到本（已派生）项目，**只覆盖规则、不动项目自有内容**（PROJECT / EVIDENCE / 实验 / 数据 / 结果）；用法见 `bash scripts/update_from_template.sh -h`。
+  - **重要**：项目特异规则请写入 `docs/PROJECT.md`，**不要直接改 `CLAUDE.md` 等模板规则文件**，以免 `update_from_template.sh` 更新时被覆盖。
 - 主脚本：`<主脚本>`（TBD）

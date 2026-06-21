@@ -51,6 +51,8 @@ claude_code_project_template/
 │       ├── grant_writing.md
 │       └── software_engineering.md
 ├── scripts/                           # 可复现脚本（训练/评估/数据处理等）
+│   ├── bootstrap_new_project.sh       # 从模板一键派生新项目
+│   ├── update_from_template.sh        # 把模板规则更新到已派生项目（不动项目内容）
 │   └── README.md                      # 脚本目录约定（命名 / 可复现 / 记录到日志）
 ├── experiments/
 │   ├── README.md                      # 实验记录目录约定（records / records_archive 分工）
@@ -82,6 +84,8 @@ claude_code_project_template/
 | [docs/TEMPLATE_CHANGELOG.md](docs/TEMPLATE_CHANGELOG.md) | 模板维护 | 记录模板本身的演进，与项目事实分离。 |
 | [configs/task_types/](configs/task_types/) | 配置 | 各任务类型的配置与约定，按项目实际需要启用。 |
 | [scripts/](scripts/) | 代码 | 可复现的脚本入口，配合 commit hash 与配置使用。 |
+| [scripts/bootstrap_new_project.sh](scripts/bootstrap_new_project.sh) | 工具 | 从模板一键派生新项目（重置 git 历史 + 可追溯派生信息）。 |
+| [scripts/update_from_template.sh](scripts/update_from_template.sh) | 工具 | 把模板规则更新到已派生项目（只覆盖规则、不动项目内容）。 |
 | [scripts/README.md](scripts/README.md) | 说明 | 脚本目录的命名、可复现与记录约定。 |
 | [experiments/README.md](experiments/README.md) | 说明 | 实验记录目录约定（records / records_archive 分工）。 |
 | [experiments/records/](experiments/records/) | 科研证据 | 活跃实验的记录目录。 |
@@ -104,13 +108,43 @@ claude_code_project_template/
 
 ---
 
-## 5. 首次使用步骤
+## 5. 使用方法
+
+### 5.1 从模板派生新项目（bootstrap）
+
+在**模板仓库内**运行——最简一条命令（先确保已配 git 身份：`git config --global user.name "你的名字"` 与 `user.email`）：
+
+```bash
+scripts/bootstrap_new_project.sh -n <新项目名> -r v0.2-template
+```
+
+默认生成在 `../<新项目名>`：**剥离模板 git 历史 → 新建独立仓库（main 分支）→ 写入可追溯派生信息**；不自动 push。常用选项：
+
+- 绑定远程（不自动推）：`--remote git@github.com:<你>/<新项目名>.git`
+- 指定目录 / 任务类型：`-d <目录>`、`-t <任务类型>`（如 `foundation_model`、`segmentation`）
+- 换台机器：先 `git clone <模板URL>`，进入后再运行上面的命令并用 `-d` 指定目标目录。
+
+### 5.2 首次使用步骤（派生后）
 
 1. **先读 [CLAUDE.md](CLAUDE.md)** —— 了解 Agent 在本项目中的行为规则与禁止事项，确保协作从一开始就遵守科研纪律。
 2. **再读 [docs/PROJECT.md](docs/PROJECT.md)** —— 这是当前项目的唯一事实源；把其中的占位符（如 `<项目名称>`、`<任务类型>`、`<研究目标>`、`<数据集名称>`、`<数据路径>`、`<主要指标>`）逐项替换为真实信息，未知项保留为 `TBD`。
 3. **然后读 [docs/TASK_BRIEF.md](docs/TASK_BRIEF.md)** —— 明确"当前这一阶段具体要做什么"，界定范围、交付物与约束。
 4. **按需启用任务类型配置** —— 在 [configs/task_types/](configs/task_types/) 中选择与本项目匹配的任务类型（如 `segmentation.md`、`benchmark.md`、`paper_writing.md` 等），其余可暂不使用。
 5. **开始记录证据** —— 一旦产生真实运行/结果，先进 [docs/EXPERIMENT_LOG.md](docs/EXPERIMENT_LOG.md)（流水），再把可信结论登记到 [docs/EVIDENCE.md](docs/EVIDENCE.md)（台账），并标注证据等级。
+
+### 5.3 更新模板规则（模板升级后同步到已派生项目）
+
+派生项目是**独立仓库，不会自动跟随模板**。模板规则更新后，**在项目目录内**运行（要求工作区干净）：
+
+```bash
+scripts/update_from_template.sh --template <模板路径或URL> -r v0.2-template --dry-run
+```
+
+确认无误后去掉 `--dry-run` 实跑，再 `git diff` 审阅 → `git add -A && git commit`。要点：
+
+- **只覆盖模板拥有的规则文件**（`CLAUDE.md`、`docs/RESEARCH_RULES.md`、`docs/RESEARCH_LOOP.md`、`configs/task_types/`、脚手架脚本），**绝不触碰项目自有内容**（`PROJECT.md`、`EVIDENCE.md`、实验 / 数据 / 结果 / 代码）。
+- 不自动提交；写 `.template-sync` 记录同步来源（ref + commit + 日期）。
+- **纪律**：项目特异规则写进 [docs/PROJECT.md](docs/PROJECT.md)，**不要直接改 `CLAUDE.md` 等模板规则文件**，以免更新时被覆盖。
 
 ---
 
