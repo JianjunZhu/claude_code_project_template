@@ -124,7 +124,7 @@ claude_code_project_template/
 在**模板仓库内**运行——最简一条命令（先确保已配 git 身份：`git config --global user.name "你的名字"` 与 `user.email`）：
 
 ```bash
-scripts/bootstrap_new_project.sh -n <新项目名> -r v0.3.2-template
+scripts/bootstrap_new_project.sh -n <新项目名> -r v0.3.3-template
 ```
 
 默认生成在 `../<新项目名>`：**剥离模板 git 历史 → 新建独立仓库（main 分支）→ 写入可追溯派生信息**；不自动 push。常用选项：
@@ -146,15 +146,41 @@ scripts/bootstrap_new_project.sh -n <新项目名> -r v0.3.2-template
 派生项目是**独立仓库，不会自动跟随模板**。模板规则更新后，**在项目目录内**运行（要求工作区干净）：
 
 ```bash
-scripts/update_from_template.sh --template <模板路径或URL> -r v0.3.2-template --dry-run
+scripts/update_from_template.sh --template <模板路径或URL> -r v0.3.3-template --dry-run
 ```
 
 确认无误后去掉 `--dry-run` 实跑，再 `git diff` 审阅 → `git add -A && git commit`。要点：
 
 - **只覆盖模板拥有的规则文件**（`CLAUDE.md`、`docs/RESEARCH_RULES.md`、`docs/RESEARCH_LOOP.md`、`configs/task_types/`、脚手架脚本），**绝不触碰项目自有内容**（`PROJECT.md`、`EVIDENCE.md`、实验 / 数据 / 结果 / 代码）。
-- **补缺新目录**（可选 `--scaffold`）：旧项目缺 `src/`、`third_party/`、`results/`、`reports/`、`configs/experiments/`、`data/{raw,processed,validation}/` 等目录时，加 `--scaffold` 会**只新建缺失的脚手架文件、绝不覆盖已有**（已定制的同名文件原样保留），幂等。例：`update_from_template.sh --template <模板> -r v0.3.2-template --scaffold --dry-run`。
+- **补缺新目录**（可选 `--scaffold`）：旧项目缺 `src/`、`third_party/`、`results/`、`reports/`、`configs/experiments/`、`data/{raw,processed,validation}/` 等目录时，加 `--scaffold` 会**只新建缺失的脚手架文件、绝不覆盖已有**（已定制的同名文件原样保留），幂等。例：`update_from_template.sh --template <模板> -r v0.3.3-template --scaffold --dry-run`。
 - 不自动提交；写 `.template-sync` 记录同步来源（ref + commit + 日期）。
 - **纪律**：项目特异规则写进 [docs/PROJECT.md](docs/PROJECT.md)，**不要直接改 `CLAUDE.md` 等模板规则文件**，以免更新时被覆盖。
+
+### 5.4 建议安装的技能 / 工具（增强协作）
+
+下列工具与本模板配合更高效，**建议按需安装到本机**（技能 / 工具本体不入仓库）。它们是**增强项而非前置**——模板规则与流程不依赖它们，未安装时如实降级为手工流程。
+
+**① academic-research-skills（ARS）** — 科研全流程技能套件（许可 CC-BY-NC，仅非商用）
+
+- 来源：<https://github.com/imbad0202/academic-research-skills>
+- 能力：`deep-research`（文献 / 综述 / 系统综述）、`academic-paper`（写作 / 改稿 / 引用核查）、`academic-paper-reviewer`（多视角同行评审）、`academic-pipeline`（端到端）。
+- 安装（在 Claude Code 内）：
+
+```
+/plugin marketplace add Imbad0202/academic-research-skills
+/plugin install academic-research-skills
+```
+
+- 用法：见 [CLAUDE.md](CLAUDE.md) 第 17 节与 [docs/RESEARCH_LOOP.md](docs/RESEARCH_LOOP.md)（写作 / 评审环委托 ARS）。
+
+**② codegraph** — 代码知识图谱（Claude Code 的 MCP server，许可 MIT，100% 本地、无需 API key）
+
+- 来源：<https://github.com/colbymchenry/codegraph>
+- 特点：把整库的**符号、调用关系、imports、继承、路由→handler**预建成本地 **SQLite + FTS5 知识图谱**，**亚毫秒查询**、文件 watcher **增量同步**（约 2 秒去抖）；用即时图查询代替反复 grep / 读文件，**显著省 token 与工具调用**（README 基准：约 47% 更少 token、约 58% 更少工具调用）。支持 20+ 语言、零配置。
+- 主要查询：`codegraph_explore`（"X 怎么工作 / 从 X 到 Y 的流程"，主力，一次拿结构化结果）、`codegraph_search`（按名查符号）、`codegraph_callers`（谁调用了它，含回调注册处）、`codegraph_node`（单符号完整源码 + 调用轨迹）；另有 callees / impact / files / status。
+- 安装：`curl -fsSL https://raw.githubusercontent.com/colbymchenry/codegraph/main/install.sh | sh`（或 `npm i -g @colbymchenry/codegraph`），安装器自动写好 MCP 配置。
+- **每个项目首次需建索引**：在项目根运行 `codegraph init` 生成 `.codegraph/`（未建索引时 MCP 不激活）；之后自动增量同步。`.codegraph/` 为本地生成物，不入 git。
+- 用法纪律：**写 / 改代码前先用 codegraph 理解结构、调用关系与影响面**（见 [CLAUDE.md](CLAUDE.md) 第 9 节），尤其在 `src/`、`third_party/` 与执行循环的代码工程阶段。
 
 ---
 

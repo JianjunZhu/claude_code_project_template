@@ -154,7 +154,7 @@
 
 ### 9.1 代码编辑
 
-- 编辑前先用 Read 读到要改的文件与上下文；改动聚焦、最小、可解释。
+- 编辑前先**理解代码**：若项目已建 codegraph 索引（`.codegraph/`），优先用 codegraph（`codegraph_explore` / `codegraph_callers` / `codegraph_impact`）摸清结构、调用关系与改动影响面，再用 Read 看具体文件；改动聚焦、最小、可解释。（codegraph 见 [`README.md`](README.md) 第 5.4 节，可选增强；未装则照常 Read + 搜索。）
 - 遵循已有代码风格与目录约定；**自有源码放 [`src/`](src/)、运行入口脚本放 [`scripts/`](scripts/)、第三方 / 下载代码放 [`third_party/`](third_party/)（不入 git，用 manifest）**。
 - 不在源码里硬编码私有绝对路径 / 密钥 / token；用配置或环境变量，路径用占位符。
 - 改动影响到事实/结论/流程时，同步更新对应文档（见第 12 节）。
