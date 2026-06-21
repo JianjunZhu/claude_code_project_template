@@ -124,7 +124,7 @@ claude_code_project_template/
 在**模板仓库内**运行——最简一条命令（先确保已配 git 身份：`git config --global user.name "你的名字"` 与 `user.email`）：
 
 ```bash
-scripts/bootstrap_new_project.sh -n <新项目名> -r v0.3.1-template
+scripts/bootstrap_new_project.sh -n <新项目名> -r v0.3.2-template
 ```
 
 默认生成在 `../<新项目名>`：**剥离模板 git 历史 → 新建独立仓库（main 分支）→ 写入可追溯派生信息**；不自动 push。常用选项：
@@ -146,13 +146,13 @@ scripts/bootstrap_new_project.sh -n <新项目名> -r v0.3.1-template
 派生项目是**独立仓库，不会自动跟随模板**。模板规则更新后，**在项目目录内**运行（要求工作区干净）：
 
 ```bash
-scripts/update_from_template.sh --template <模板路径或URL> -r v0.3.1-template --dry-run
+scripts/update_from_template.sh --template <模板路径或URL> -r v0.3.2-template --dry-run
 ```
 
 确认无误后去掉 `--dry-run` 实跑，再 `git diff` 审阅 → `git add -A && git commit`。要点：
 
 - **只覆盖模板拥有的规则文件**（`CLAUDE.md`、`docs/RESEARCH_RULES.md`、`docs/RESEARCH_LOOP.md`、`configs/task_types/`、脚手架脚本），**绝不触碰项目自有内容**（`PROJECT.md`、`EVIDENCE.md`、实验 / 数据 / 结果 / 代码）。
-- **补缺新目录**（可选 `--scaffold`）：旧项目缺 `src/`、`third_party/`、`results/`、`reports/`、`configs/experiments/`、`data/{raw,processed,validation}/` 等目录时，加 `--scaffold` 会**只新建缺失的脚手架文件、绝不覆盖已有**（已定制的同名文件原样保留），幂等。例：`update_from_template.sh --template <模板> -r v0.3.1-template --scaffold --dry-run`。
+- **补缺新目录**（可选 `--scaffold`）：旧项目缺 `src/`、`third_party/`、`results/`、`reports/`、`configs/experiments/`、`data/{raw,processed,validation}/` 等目录时，加 `--scaffold` 会**只新建缺失的脚手架文件、绝不覆盖已有**（已定制的同名文件原样保留），幂等。例：`update_from_template.sh --template <模板> -r v0.3.2-template --scaffold --dry-run`。
 - 不自动提交；写 `.template-sync` 记录同步来源（ref + commit + 日期）。
 - **纪律**：项目特异规则写进 [docs/PROJECT.md](docs/PROJECT.md)，**不要直接改 `CLAUDE.md` 等模板规则文件**，以免更新时被覆盖。
 
