@@ -27,41 +27,44 @@ claude_code_project_template/
 ├── MEMORY.md                          # 长期经验 / 教训（跨任务复用，不是当前项目事实）
 ├── README.md                          # 本文件：模板总览与使用指南
 ├── .gitignore                         # git 忽略规则（数据/权重/大输出/缓存/密钥）
-├── docs/
+├── docs/                              # 规则与文档
 │   ├── PROJECT.md                     # 当前项目事实（唯一事实源，全部占位符起步）
 │   ├── TASK_BRIEF.md                  # 当前任务简报（这一阶段要做什么）
 │   ├── RESEARCH_RULES.md              # 科研纪律（证据等级、冻结测试、防造假）
+│   ├── RESEARCH_LOOP.md               # 迭代研究循环协议（三环：计划/执行/写作）
 │   ├── EVIDENCE.md                    # 科研证据台账（结论 ↔ artifact 映射）
 │   ├── EXPERIMENT_LOG.md              # 实验流水日志（按时间追加，含负结果）
 │   ├── RESULT_AUDIT.md                # 结果审计（指标一致性、泄漏、复现核查）
 │   ├── PAPER_NOTES.md                 # 论文/写作笔记（主张需有证据支撑）
 │   └── TEMPLATE_CHANGELOG.md          # 模板自身的变更记录
 ├── configs/
-│   └── task_types/                    # 各任务类型的配置说明（按需启用）
-│       ├── foundation_model.md
-│       ├── segmentation.md
-│       ├── completion.md
-│       ├── detection.md
-│       ├── tracking.md
-│       ├── registration.md
-│       ├── robotics.md
-│       ├── reinforcement_learning.md
-│       ├── benchmark.md
-│       ├── paper_writing.md
-│       ├── grant_writing.md
-│       └── software_engineering.md
-├── scripts/                           # 可复现脚本（训练/评估/数据处理等）
+│   ├── task_types/                    # 各任务类型配置（按需启用，12 个）
+│   └── experiments/                   # 单次实验配置（seed/超参/划分，入 git）
+├── src/                               # 项目自有源码（库/模块/模型/数据处理）
+├── scripts/                           # 运行入口脚本（train_/eval_/prep_/plot_）+ 模板工具
 │   ├── bootstrap_new_project.sh       # 从模板一键派生新项目
 │   ├── update_from_template.sh        # 把模板规则更新到已派生项目（不动项目内容）
-│   └── README.md                      # 脚本目录约定（命名 / 可复现 / 记录到日志）
-├── experiments/
-│   ├── README.md                      # 实验记录目录约定（records / records_archive 分工）
-│   ├── records/                       # 当前实验记录（活跃）
-│   └── records_archive/               # 归档实验记录（负结果不删除，移此处）
-├── data/
-│   └── README.md                      # 数据说明（数据本体不入 git，用 manifest+checksum）
-└── outputs/
-    └── README.md                      # 输出说明（大型输出不入 git）
+│   └── README.md                      # 脚本目录约定
+├── third_party/                       # 第三方/下载代码（baseline/克隆仓库，不入 git，用 manifest）
+├── data/                              # 数据（不入 git，用 manifest+checksum）
+│   ├── raw/                           # 原始数据
+│   ├── processed/                     # 预处理后数据
+│   ├── validation/                    # 验证/外部评测数据
+│   └── README.md                      # 数据组织与登记约定
+├── outputs/                           # 运行中间产物（不入 git）
+│   ├── <实验名>/<run-id>/             # 每次运行：checkpoints/ logs/ metrics/ predictions/
+│   └── README.md                      # 输出组织约定
+├── results/                           # 整理后结果 + 验证结果（轻量表/图，入 git）
+│   └── README.md
+├── reports/                           # 每轮研究报告
+│   ├── round-<NN>_<主题>.md           # 逐轮报告（活跃）
+│   ├── archive/                       # 归档旧报告（只归档不删除）
+│   ├── SUMMARY.md                     # 定期归档总结（滚动汇总）
+│   └── README.md
+└── experiments/
+    ├── records/                       # 单次运行记录（活跃）
+    ├── records_archive/               # 归档运行记录（负结果不删除）
+    └── README.md
 ```
 
 ---
@@ -77,13 +80,17 @@ claude_code_project_template/
 | [docs/PROJECT.md](docs/PROJECT.md) | 项目事实 | 当前项目的唯一事实源：目标、任务类型、数据、环境、路径。 |
 | [docs/TASK_BRIEF.md](docs/TASK_BRIEF.md) | 项目事实 | 当前阶段的任务简报：本轮要交付什么、范围与约束。 |
 | [docs/RESEARCH_RULES.md](docs/RESEARCH_RULES.md) | 科研纪律 | 证据等级、冻结测试纪律、防造假与安全表达规则。 |
+| [docs/RESEARCH_LOOP.md](docs/RESEARCH_LOOP.md) | 工作流 | 三环迭代循环协议（计划/执行/写作），论文产出主流程。 |
 | [docs/EVIDENCE.md](docs/EVIDENCE.md) | 科研证据 | 证据台账：每条结论对应的 artifact、位置、生成命令、等级。 |
 | [docs/EXPERIMENT_LOG.md](docs/EXPERIMENT_LOG.md) | 科研证据 | 按时间追加的实验流水，含失败与负结果。 |
 | [docs/RESULT_AUDIT.md](docs/RESULT_AUDIT.md) | 科研证据 | 对结果做一致性 / 泄漏 / 复现的审计核查。 |
 | [docs/PAPER_NOTES.md](docs/PAPER_NOTES.md) | 写作 | 论文与写作笔记，主张必须可回溯到证据。 |
 | [docs/TEMPLATE_CHANGELOG.md](docs/TEMPLATE_CHANGELOG.md) | 模板维护 | 记录模板本身的演进，与项目事实分离。 |
 | [configs/task_types/](configs/task_types/) | 配置 | 各任务类型的配置与约定，按项目实际需要启用。 |
-| [scripts/](scripts/) | 代码 | 可复现的脚本入口，配合 commit hash 与配置使用。 |
+| [configs/experiments/](configs/experiments/) | 配置 | 单次实验可复现配置（seed/超参/划分），入 git。 |
+| [src/](src/) | 代码 | 项目自有源码（库/模块/模型/数据处理）。 |
+| [third_party/](third_party/) | 代码 | 第三方/下载代码（baseline/克隆仓库，不入 git，用 manifest）。 |
+| [scripts/](scripts/) | 代码 | 运行入口脚本 + 模板工具，配合 commit hash 与配置使用。 |
 | [scripts/bootstrap_new_project.sh](scripts/bootstrap_new_project.sh) | 工具 | 从模板一键派生新项目（重置 git 历史 + 可追溯派生信息）。 |
 | [scripts/update_from_template.sh](scripts/update_from_template.sh) | 工具 | 把模板规则更新到已派生项目（只覆盖规则、不动项目内容）。 |
 | [scripts/README.md](scripts/README.md) | 说明 | 脚本目录的命名、可复现与记录约定。 |
@@ -91,7 +98,9 @@ claude_code_project_template/
 | [experiments/records/](experiments/records/) | 科研证据 | 活跃实验的记录目录。 |
 | [experiments/records_archive/](experiments/records_archive/) | 科研证据 | 归档实验记录，负结果归此而非删除。 |
 | [data/README.md](data/README.md) | 说明 | 数据组织与 manifest/checksum 约定（数据本体不入 git）。 |
-| [outputs/README.md](outputs/README.md) | 说明 | 输出组织约定（大型输出不入 git）。 |
+| [outputs/README.md](outputs/README.md) | 说明 | 运行中间产物组织（`<实验>/<run>/`，大输出不入 git）。 |
+| [results/](results/) | 科研证据 | 整理后结果与验证结果（轻量表/图，入 git，支撑 claim）。 |
+| [reports/](reports/) | 科研证据 | 每轮研究报告 + `archive/` + `SUMMARY.md`（定期归档总结）。 |
 
 ---
 

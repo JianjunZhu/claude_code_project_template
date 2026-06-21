@@ -53,6 +53,11 @@ data/**
 outputs/**
 
 # -----------------------------------------------------------------------------
+# 3b. 第三方 / 下载代码（不入 git，用 manifest + checksum 或 submodule 记录来源）
+# -----------------------------------------------------------------------------
+third_party/**
+
+# -----------------------------------------------------------------------------
 # 4. 概率图 / 医学影像（体积大，默认不入 git）
 # -----------------------------------------------------------------------------
 *.nii
@@ -152,6 +157,17 @@ credentials.*
 !outputs/README.md
 # 自检：git check-ignore -v data/<数据集>/manifest.json
 #   —— 应显示由某条 ! 规则放行；若被 data/** 忽略则需检查目录放行顺序。
+
+# 逐级放行 third_party/（README/manifest 入 git，代码本体仍忽略）
+!third_party/
+!third_party/**/
+!third_party/README.md
+
+# results/ 为整理后的轻量结果，入 git（覆盖上面的全局 *.csv 等忽略；大文件仍放 outputs/）
+!results/**/*.csv
+!results/**/*.tsv
+!results/**/*.json
+!results/**/*.md
 
 # docs/ configs/ scripts/ 的轻量文件（文档、配置说明、脚本）
 !docs/

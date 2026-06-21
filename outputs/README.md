@@ -27,20 +27,20 @@
 
 ## 2. 子目录组织建议
 
-建议在输出根目录 `<输出目录>/` 下按**实验**或**日期**组织，避免不同运行互相覆盖：
+建议在 `outputs/` 下按**实验 / 运行**组织，每次运行一个独立目录，避免互相覆盖：
 
 ```
-<输出目录>/
-  <实验名>_<日期>/         # 例如 exp-<实验名>_2026-06-19/
-    checkpoints/           # 模型权重（不入 git）
-    logs/                  # 训练/评估日志（不入 git）
-    metrics/               # 指标 CSV/JSON（轻量，可入 git）
-    predictions/           # 概率图/预测产物（不入 git）
-    manifest.<格式>        # 本次输出清单（入 git）
-    config_snapshot.<格式> # 本次运行配置快照（入 git）
+outputs/
+  <实验名>/<run-id>/         # run-id 如 2026-06-19_seed0 或 run-001
+    checkpoints/             # 模型权重（不入 git）
+    logs/                    # 训练/评估日志（不入 git）
+    metrics/                 # 指标 CSV/JSON（原始，体积合理时可入 git）
+    predictions/             # 概率图/预测产物（不入 git）
+    manifest.<格式>          # 本次输出清单（入 git）
+    config_snapshot.<格式>   # 本次运行配置快照（入 git）
 ```
 
-具体命名占位：`<输出目录>` `<实验名>`。日期用 `YYYY-MM-DD`。
+本目录只放**运行中间产物**；整理后、支撑 claim 的**轻量结果与验证结果**另归 [`../results/`](../results/)（入 git）。`<run-id>` 建议含 seed / 日期，便于区分多次运行。
 
 ---
 

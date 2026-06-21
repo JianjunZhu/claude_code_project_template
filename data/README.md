@@ -4,6 +4,8 @@
 
 本目录用于存放与本项目相关的数据集说明、manifest 与 checksum 文件。数据本体（原始文件、影像、特征、缓存）默认**不进入 git**。
 
+**子目录**：`raw/`（原始数据）、`processed/`（预处理后数据）、`validation/`（验证 / 外部评测数据）。三者数据本体均不入 git，各自用 manifest + checksum 登记；验证数据所产生的结果归 [`../results/`](../results/)。
+
 ---
 
 ## 1. git 纳入规则

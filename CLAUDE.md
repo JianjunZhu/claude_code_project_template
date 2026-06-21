@@ -155,7 +155,7 @@
 ### 9.1 代码编辑
 
 - 编辑前先用 Read 读到要改的文件与上下文；改动聚焦、最小、可解释。
-- 遵循已有代码风格与目录约定；新增脚本放 [`scripts/`](scripts/)。
+- 遵循已有代码风格与目录约定；**自有源码放 [`src/`](src/)、运行入口脚本放 [`scripts/`](scripts/)、第三方 / 下载代码放 [`third_party/`](third_party/)（不入 git，用 manifest）**。
 - 不在源码里硬编码私有绝对路径 / 密钥 / token；用配置或环境变量，路径用占位符。
 - 改动影响到事实/结论/流程时，同步更新对应文档（见第 12 节）。
 
@@ -350,11 +350,13 @@
 - [`software_engineering.md`](configs/task_types/software_engineering.md)
 
 目录约定：
-- [`scripts/`](scripts/) — 脚本
-- [`experiments/records/`](experiments/records/) — 单次实验记录
-- [`experiments/records_archive/`](experiments/records_archive/) — 实验记录归档（含负结果）
-- [`data/README.md`](data/README.md) — 数据说明（数据本身不入 git）
-- [`outputs/README.md`](outputs/README.md) — 输出说明（大输出不入 git）
+- [`src/`](src/) — 项目自有源码 ・ [`scripts/`](scripts/) — 运行入口脚本 + 模板工具 ・ [`third_party/`](third_party/) — 第三方 / 下载代码（不入 git）
+- [`configs/experiments/`](configs/experiments/) — 单次实验配置（seed/超参/划分）
+- [`data/README.md`](data/README.md) — 数据（raw / processed / validation，不入 git）
+- [`outputs/README.md`](outputs/README.md) — 运行中间产物（`<实验>/<run>/`，不入 git）
+- [`results/README.md`](results/README.md) — 整理后结果 / 验证结果（轻量入 git）
+- [`reports/README.md`](reports/README.md) — 每轮研究报告 + 定期归档总结（`SUMMARY.md`）
+- [`experiments/records/`](experiments/records/) — 单次运行记录 ・ [`experiments/records_archive/`](experiments/records_archive/) — 归档（含负结果）
 
 ---
 
