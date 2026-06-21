@@ -32,6 +32,7 @@
 
 | 日期 | 变更 | 原因 | 影响 |
 |---|---|---|---|
+| 2026-06-21 | **里程碑 v0.3.1-template**：将含 `--scaffold` 的最新脚本固化为标签；README 派生 / 更新示例统一改用 `v0.3.1-template`，使 `bootstrap -r v0.3.1-template` 派生的项目直接带 `--scaffold` 能力。 | 把"带 --scaffold 的脚本"固化为可派生的稳定基线。 | 非破坏性：仅版本引用与标签。 |
 | 2026-06-21 | **update_from_template 增加 `--scaffold`**：可选补缺新目录脚手架（`src/`、`third_party/`、`results/`、`reports/`、`configs/experiments/`、`data/{raw,processed,validation}/` 的约定文件），语义 = **只新建缺失、绝不覆盖已有**（保护项目已定制内容），幂等；让旧项目也能补上新目录结构。已实测：补缺 10 个、规则同步、项目内容零改动、已定制文件不被覆盖。README §5.3 同步说明。 | 已派生的旧项目无法靠规则同步获得新目录；提供安全的补缺机制。 | 非破坏性：新增可选 flag；默认行为不变。 |
 | 2026-06-21 | **目录结构扩展（执行生命周期分类）**：新增 `src/`（自有源码）、`third_party/`（第三方/下载代码，不入 git）、`configs/experiments/`（单次实验配置）、`data/{raw,processed,validation}/`、`results/`（整理后结果/验证结果，轻量入 git）、`reports/`（每轮研究报告 + `archive/` + `SUMMARY.md` 定期归档总结）；规范 `outputs/<实验>/<run>/` 中间产物结构。各新目录配 README 约定；更新 README 目录树/职责表、`.gitignore`（third_party 忽略 + results 轻量入库例外）、`RESEARCH_LOOP.md` ④⑤ 落点、`CLAUDE.md` 第 9/18 节。 | 用户要求把执行过程各产物（代码/第三方/中间结果/验证数据/验证结果/每轮报告/报告归档总结）各归其位，结构更清晰。 | 非破坏性：仅新增目录与登记；既有文件 / 编号不变。 |
 | 2026-06-21 | **新增模板规则更新脚本**：`scripts/update_from_template.sh` —— 给"已派生、在做的项目"把模板规则文件（`CLAUDE.md`、`RESEARCH_RULES.md`、`RESEARCH_LOOP.md`、`configs/task_types`、脚手架脚本）更新到指定模板 ref，**只覆盖模板拥有的文件、绝不触碰项目自有内容**（PROJECT/EVIDENCE/实验/数据/结果）；带 `--dry-run`、脏树守卫、不自动提交、写 `.template-sync` 记录来源。配套纪律：项目特异规则写 `docs/PROJECT.md` 而非改 `CLAUDE.md`。已实测：规则更新、项目内容零改动、bash 3.2 空数组兼容。 | 派生项目是独立仓库、不会自动跟随模板；提供安全、可 review 的规则同步机制。 | 非破坏性：新增脚本 + README / scripts 登记。 |
