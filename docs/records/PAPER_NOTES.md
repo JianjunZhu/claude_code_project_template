@@ -10,10 +10,10 @@
 
 - 本文件只记录**面向论文的 claim 与证据映射**，不替代以下文档：
   - Agent 行为规则 → `CLAUDE.md`
-  - 当前项目事实 → `docs/PROJECT.md`
-  - 科研证据与实验流水 → `docs/EVIDENCE.md`、`docs/EXPERIMENT_LOG.md`
+  - 当前项目事实 → `docs/records/PROJECT.md`
+  - 科研证据与实验流水 → `docs/records/EVIDENCE.md`、`docs/records/EXPERIMENT_LOG.md`
   - 长期经验 → `MEMORY.md`
-- 论文中任何数字/结论，必须能在 `docs/EVIDENCE.md` 找到对应 artifact 记录；本文件提供"论文视角"的索引层。
+- 论文中任何数字/结论，必须能在 `docs/records/EVIDENCE.md` 找到对应 artifact 记录；本文件提供"论文视角"的索引层。
 - 在没有真实 artifact 支持前，所有状态保持 PENDING / NOT VERIFIED / INCOMPLETE / TBD。
 
 ### 统一证据等级（低 → 高，全模板共用同一套）
@@ -120,7 +120,7 @@ $$
 
 ## 6. 负结果记录（必须保留）
 
-> 失败运行、被否定假设、数据泄漏风险、指标不一致等负结果**只可归档、不可删除**。论文相关的负结果在此登记，明细可链接到 `docs/EXPERIMENT_LOG.md` / `experiments/records_archive/`。
+> 失败运行、被否定假设、数据泄漏风险、指标不一致等负结果**只可归档、不可删除**。论文相关的负结果在此登记，明细可链接到 `docs/records/EXPERIMENT_LOG.md` / `experiments/records_archive/`。
 
 | 编号 | 负结果 / 否定假设 | 证据 artifact（路径/ID） | 发现时间 | 处理（归档位置） | 状态 |
 |---|---|---|---|---|---|
@@ -149,7 +149,7 @@ $$
 - [ ] 未在 holdout / 外部测试集上调过 checkpoint / 阈值 / 架构 / loss（PENDING）
 - [ ] 未反复使用 holdout / 外部测试集来优化方法（PENDING）
 - [ ] 测试前已冻结：协议 / 脚本 / 模型 / 阈值 / 配置（PENDING）
-- [ ] 任何潜在数据泄漏均已在 `docs/EXPERIMENT_LOG.md` 记录（PENDING）
+- [ ] 任何潜在数据泄漏均已在 `docs/records/EXPERIMENT_LOG.md` 记录（PENDING）
 - [ ] 论文中"外部验证 / holdout"表述与实际证据等级一致（PENDING）
 
 ---
@@ -172,7 +172,7 @@ $$
 - [ ] 第 6 节负结果已保留并归档
 - [ ] 第 7 节贡献分类如实
 - [ ] 第 9 节红线逐条通过
-- [ ] 与 `docs/EVIDENCE.md`、`docs/RESULT_AUDIT.md` 对账一致
+- [ ] 与 `docs/records/EVIDENCE.md`、`docs/records/RESULT_AUDIT.md` 对账一致
 
 ---
 

@@ -1,7 +1,7 @@
 # MEMORY.md —— 长期经验记忆索引
 
 > **这不是临时笔记区。** 本文件只记录**长期、跨多次实验仍然成立、对未来决策有指导价值**的经验。
-> 临时记录（单次运行、临时调试、当天进展、未沉淀的观察）一律放 `docs/EXPERIMENT_LOG.md`，不要写在这里。
+> 临时记录（单次运行、临时调试、当天进展、未沉淀的观察）一律放 `docs/records/EXPERIMENT_LOG.md`，不要写在这里。
 >
 > 本文件是**空模板**：除"本模板于 2026-06-19 创建"这一事实外，不含任何真实项目经验。各分类当前为空，仅给占位与写入须知。
 
@@ -10,8 +10,8 @@
 ## 0. 文档边界与四类内容区分
 
 - Agent 行为规则 → `CLAUDE.md`
-- 当前项目事实 → `docs/PROJECT.md`
-- 科研证据 / 实验流水 → `docs/EVIDENCE.md`、`docs/EXPERIMENT_LOG.md`
+- 当前项目事实 → `docs/records/PROJECT.md`
+- 科研证据 / 实验流水 → `docs/records/EVIDENCE.md`、`docs/records/EXPERIMENT_LOG.md`
 - **长期经验（本文件）** → `MEMORY.md`
 
 不要把上述内容互相混入本文件。
@@ -102,4 +102,4 @@
 
 ---
 
-*本文件持续追加；临时内容请改记 `docs/EXPERIMENT_LOG.md`。*
+*本文件持续追加；临时内容请改记 `docs/records/EXPERIMENT_LOG.md`。*

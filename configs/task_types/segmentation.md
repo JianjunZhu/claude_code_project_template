@@ -1,7 +1,7 @@
 # 任务类型配置：segmentation（分割）
 
 > 配置可选，基础模板不依赖任何单一任务类型。
-> 本文件仅在当前项目确属"分割"任务时启用；启用方式为在 `docs/PROJECT.md` 标注任务类型并按需引用本文件。所有具体取值用占位符表达，未知=TBD、未验证=PENDING、未确认=NOT VERIFIED、未完成=INCOMPLETE。
+> 本文件仅在当前项目确属"分割"任务时启用；启用方式为在 `docs/records/PROJECT.md` 标注任务类型并按需引用本文件。所有具体取值用占位符表达，未知=TBD、未验证=PENDING、未确认=NOT VERIFIED、未完成=INCOMPLETE。
 
 ## 1. 任务目标
 
@@ -60,10 +60,10 @@ $$
 
 ## 6. 优先查看的文件
 
-1. `docs/PROJECT.md`：当前项目事实、任务类型、数据与目标。
-2. `docs/TASK_BRIEF.md`：本次任务的具体范围与约束。
-3. `docs/RESEARCH_RULES.md`：科研纪律与冻结测试规则。
-4. `docs/EVIDENCE.md` 与 `docs/EXPERIMENT_LOG.md`：已有证据与运行记录。
+1. `docs/records/PROJECT.md`：当前项目事实、任务类型、数据与目标。
+2. `docs/records/TASK_BRIEF.md`：本次任务的具体范围与约束。
+3. `docs/rules/RESEARCH_RULES.md`：科研纪律与冻结测试规则。
+4. `docs/records/EVIDENCE.md` 与 `docs/records/EXPERIMENT_LOG.md`：已有证据与运行记录。
 5. `data/README.md`：数据划分、标注口径、路径约定。
 6. `CLAUDE.md`：Agent 行为规则。
 

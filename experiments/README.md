@@ -20,9 +20,9 @@
 
 ---
 
-## 2. 与 docs/EXPERIMENT_LOG.md 的关系
+## 2. 与 docs/records/EXPERIMENT_LOG.md 的关系
 
-- `docs/EXPERIMENT_LOG.md`：**流水总览**。按时间顺序列出全部实验的简短条目（实验名、日期、目的、状态、指向本目录详细记录的链接），便于横向浏览。
+- `docs/records/EXPERIMENT_LOG.md`：**流水总览**。按时间顺序列出全部实验的简短条目（实验名、日期、目的、状态、指向本目录详细记录的链接），便于横向浏览。
 - `experiments/records/` 与 `records_archive/`：**单次详细记录**。每个实验一份文件，记录可复现所需的完整信息。
 
 两者一一对应：总览中的每条应能链接到本目录的一份详细记录；详细记录应回链到总览条目。
@@ -32,7 +32,7 @@
 ## 3. 记录文件命名建议
 
 - 格式建议：`<日期>_<实验名>.md`，例如 `2026-06-19_<实验名>.md`。
-- 日期用 `YYYY-MM-DD`；实验名小写、下划线分隔，与 `docs/EXPERIMENT_LOG.md` 中条目一致。
+- 日期用 `YYYY-MM-DD`；实验名小写、下划线分隔，与 `docs/records/EXPERIMENT_LOG.md` 中条目一致。
 
 ---
 
@@ -44,7 +44,7 @@
 - 状态：PENDING / NOT VERIFIED / INCOMPLETE / 已完成
 - 可复现信息：commit hash、环境（`<Python解释器>` / `<Conda环境>`）、seed、数据划分、配置、命令行参数、`<主脚本>`、checkpoint 路径、评估脚本、输出 manifest 路径
 - 结果：指标（未验证标 PENDING）、对应输出 artifact 位置
-- 证据等级：引用 `docs/EVIDENCE.md` 的统一等级（1 假设 → 9 独立复现），不得高报
+- 证据等级：引用 `docs/records/EVIDENCE.md` 的统一等级（1 假设 → 9 独立复现），不得高报
 - 负结果 / 异常 / 泄漏风险：如实记录，不可省略
 
 ---

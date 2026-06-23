@@ -1,7 +1,7 @@
 # RESEARCH_RULES.md — 科研纪律详规
 
 > 本文件是科研专章，比 CLAUDE.md 中的总则更细。它规定 Agent 与研究者在本项目中处理证据、数据、指标、benchmark、论文与基金时必须遵守的纪律。
-> 文档分类提醒：本文件是**科研行为/证据纪律**，不记录具体项目事实（见 `PROJECT.md`），不记录长期经验（见根目录 `MEMORY.md`），不记录逐次实验流水（见 `EXPERIMENT_LOG.md`）。
+> 文档分类提醒：本文件是**科研行为/证据纪律**，不记录具体项目事实（见 `docs/records/PROJECT.md`），不记录长期经验（见根目录 `MEMORY.md`），不记录逐次实验流水（见 `docs/records/EXPERIMENT_LOG.md`）。
 >
 > 本模板于 2026-06-19 创建。除该创建日期外，本文件不包含任何具体项目事实、实验结果或指标数值。
 >
@@ -11,7 +11,7 @@
 
 ## 0. 统一证据等级（全模板共用同一套，低 → 高）
 
-所有文档（本文件、`EVIDENCE.md`、`EXPERIMENT_LOG.md`、`PROJECT.md`、`RESULT_AUDIT.md`、`PAPER_NOTES.md`）引用的证据等级**必须**指向以下同一套定义，不得各自另立标准：
+所有文档（本文件、`docs/records/EVIDENCE.md`、`docs/records/EXPERIMENT_LOG.md`、`docs/records/PROJECT.md`、`docs/records/RESULT_AUDIT.md`、`docs/records/PAPER_NOTES.md`）引用的证据等级**必须**指向以下同一套定义，不得各自另立标准：
 
 | 等级 | 名称 | 含义 |
 | --- | --- | --- |
@@ -169,7 +169,7 @@
 
 ## 9. 论文写作规则
 
-- [ ] 论文中每个数字、图、表都能映射到 `EVIDENCE.md` / `EXPERIMENT_LOG.md` 的具体 artifact。
+- [ ] 论文中每个数字、图、表都能映射到 `docs/records/EVIDENCE.md` / `docs/records/EXPERIMENT_LOG.md` 的具体 artifact。
 - [ ] 论文结论的证据等级与正文一致，避免"标题党"强于证据。
 - [ ] 方法描述与实际运行的脚本/配置一致（commit hash 可追溯）。
 - [ ] 报告随机性处理（seed、重复次数、方差/区间），不以单次运行下结论。
@@ -177,7 +177,7 @@
 - [ ] 数据与代码可用性声明真实（仅承诺可公开的部分）。
 - [ ] 未完成内容用 `INCOMPLETE` / `PENDING` 标注于草稿，不写成已完成。
 - [ ] 不在论文中出现未经证据支持的临床/泛化/SOTA 主张（见第 13 节）。
-- [ ] 写作记录归于 `PAPER_NOTES.md`，与项目事实、证据分离。
+- [ ] 写作记录归于 `docs/records/PAPER_NOTES.md`，与项目事实、证据分离。
 
 ---
 
@@ -243,23 +243,23 @@
 
 ## 15. 执行前验证与运行监控
 
-> 执行 / 工程纪律要点，完整操作规范见 `../CLAUDE.md` 第 14 节；此处只列与证据、正确性相关的核对项。
+> 执行 / 工程纪律要点，完整操作规范见 `CLAUDE.md` 第 14 节；此处只列与证据、正确性相关的核对项。
 
 - [ ] **小批量先行**：开启大批量 / 全量运行前，先在小批量（少量样本 / step / 单 case）上完全跑通，达到证据等级 3（实现正确性检查）后再放量。
 - [ ] 明确"小批量跑通 ≠ 方法有效"：仅证明实现正确，不据此提升证据等级或下科研结论。
 - [ ] **运行监控**：长任务设哨兵定时巡检（存活、`NaN` / 发散、资源、checkpoint 产出），异常及时止损并按第 4 节归档为负结果。
 - [ ] **效率不换正确性**：为提速引入的近似 / 降精度 / 子采样须记录，并确认不影响结论；可能影响时标 `NOT VERIFIED`。
 - [ ] 效率优化不得违反第 5 节冻结测试纪律或引入数据泄漏；不得为省时间省略第 2 / 12 节的可复现要素。
-- [ ] 运行资源指标（吞吐、wall-clock、显存）记入 `EXPERIMENT_LOG.md`，无真实运行前为 `PENDING`。
+- [ ] 运行资源指标（吞吐、wall-clock、显存）记入 `docs/records/EXPERIMENT_LOG.md`，无真实运行前为 `PENDING`。
 
 ---
 
 ## 关联文档
 
-- Agent 行为总则：`../CLAUDE.md`
-- 当前项目事实：`./PROJECT.md`
-- 证据台账：`./EVIDENCE.md`
-- 实验流水：`./EXPERIMENT_LOG.md`
-- 结果审计：`./RESULT_AUDIT.md`
-- 论文记录：`./PAPER_NOTES.md`
-- 长期经验：`../MEMORY.md`
+- Agent 行为总则：`CLAUDE.md`
+- 当前项目事实：`docs/records/PROJECT.md`
+- 证据台账：`docs/records/EVIDENCE.md`
+- 实验流水：`docs/records/EXPERIMENT_LOG.md`
+- 结果审计：`docs/records/RESULT_AUDIT.md`
+- 论文记录：`docs/records/PAPER_NOTES.md`
+- 长期经验：`MEMORY.md`

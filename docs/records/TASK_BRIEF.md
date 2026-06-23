@@ -1,7 +1,7 @@
 # TASK_BRIEF.md — 任务简报模板
 
 > 本模板于 2026-06-19 创建。下方为空白骨架，所有字段均为占位符，使用时复制并按真实情况填写，**未知用 `TBD`，不得猜测**。
-> 文档分类提醒：本文件是给 Agent / 协作者交派单次任务的简报，不替代项目事实（`./PROJECT.md`）、科研证据（`./EVIDENCE.md`）或长期经验（`../MEMORY.md`）。
+> 文档分类提醒：本文件是给 Agent / 协作者交派单次任务的简报，不替代项目事实（`docs/records/PROJECT.md`）、科研证据（`docs/records/EVIDENCE.md`）或长期经验（`MEMORY.md`）。
 
 ---
 
@@ -10,8 +10,8 @@
 1. 复制下方「空白简报骨架」，新建或追加到本文件 / 任务记录中。
 2. 逐字段填写；信息缺失时填 `TBD`，并在「所作假设」中说明缺口。
 3. 「成功标准」需可验证；涉及指标时引用 `<主要指标>` 等并注明 case-level / aggregate 口径。
-4. 任务涉及数据/测试集时，遵守 `./RESEARCH_RULES.md`（尤其冻结测试纪律第 5 节、数据集规则第 6 节）。
-5. 任务完成后，把可追溯的产物与结论登记到 `./EVIDENCE.md` / `./EXPERIMENT_LOG.md`，不要把结果只留在本简报里。
+4. 任务涉及数据/测试集时，遵守 `docs/rules/RESEARCH_RULES.md`（尤其冻结测试纪律第 5 节、数据集规则第 6 节）。
+5. 任务完成后，把可追溯的产物与结论登记到 `docs/records/EVIDENCE.md` / `docs/records/EXPERIMENT_LOG.md`，不要把结果只留在本简报里。
 6. 不得在简报中将「拟开展/预期」写成「已完成」。
 
 ---
@@ -55,8 +55,8 @@
 
 ## 关联文档
 
-- 项目事实：`./PROJECT.md`
-- 科研纪律详规：`./RESEARCH_RULES.md`
-- 证据台账：`./EVIDENCE.md`
-- 实验流水：`./EXPERIMENT_LOG.md`
-- Agent 行为规则：`../CLAUDE.md`
+- 项目事实：`docs/records/PROJECT.md`
+- 科研纪律详规：`docs/rules/RESEARCH_RULES.md`
+- 证据台账：`docs/records/EVIDENCE.md`
+- 实验流水：`docs/records/EXPERIMENT_LOG.md`
+- Agent 行为规则：`CLAUDE.md`

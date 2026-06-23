@@ -1,7 +1,7 @@
 # PROJECT.md — 当前项目事实
 
 > 本文件记录**项目事实**（当前真实状态），未知一律使用占位符，**不得猜测真实值**。
-> 文档分类提醒：项目事实在此；Agent 行为规则见 `../CLAUDE.md`；科研证据见 `./EVIDENCE.md`、`./EXPERIMENT_LOG.md`；长期经验见 `../MEMORY.md`。
+> 文档分类提醒：项目事实在此；Agent 行为规则见 `CLAUDE.md`；科研证据见 `docs/records/EVIDENCE.md`、`docs/records/EXPERIMENT_LOG.md`；长期经验见 `MEMORY.md`。
 >
 > 本模板于 2026-06-19 创建。除该创建日期外，本文件目前不含任何已确认的具体项目事实——全部为占位符，待项目实际推进后逐项填入并标注证据。
 
@@ -22,7 +22,7 @@
 
 ## 3. 数据集
 
-> 数据/权重默认不入 git，以 manifest + checksum 替代；隐私路径不写入 git。详细应记录项见 `./RESEARCH_RULES.md` 第 6 节。
+> 数据/权重默认不入 git，以 manifest + checksum 替代；隐私路径不写入 git。详细应记录项见 `docs/rules/RESEARCH_RULES.md` 第 6 节。
 
 | 字段 | 值 |
 | --- | --- |
@@ -75,16 +75,16 @@
 - 数据：`PENDING`（尚未接入任何数据集）。
 - 实验：`PENDING`（尚无任何运行或结果）。
 - 结论：`NOT VERIFIED`（无任何已确认结论）。
-- 整体证据等级：`TBD`（项目尚未产生 artifact，参见 `./RESEARCH_RULES.md` 第 0 节证据等级）。
+- 整体证据等级：`TBD`（项目尚未产生 artifact，参见 `docs/rules/RESEARCH_RULES.md` 第 0 节证据等级）。
 
 ## 9. 关联文档
 
-- Agent 行为规则：`../CLAUDE.md`
-- 长期经验：`../MEMORY.md`
-- 任务简报：`./TASK_BRIEF.md`
-- 科研纪律详规：`./RESEARCH_RULES.md`
-- 证据台账：`./EVIDENCE.md`
-- 实验流水：`./EXPERIMENT_LOG.md`
-- 结果审计：`./RESULT_AUDIT.md`
-- 论文记录：`./PAPER_NOTES.md`
-- 模板变更日志：`./TEMPLATE_CHANGELOG.md`
+- Agent 行为规则：`CLAUDE.md`
+- 长期经验：`MEMORY.md`
+- 任务简报：`docs/records/TASK_BRIEF.md`
+- 科研纪律详规：`docs/rules/RESEARCH_RULES.md`
+- 证据台账：`docs/records/EVIDENCE.md`
+- 实验流水：`docs/records/EXPERIMENT_LOG.md`
+- 结果审计：`docs/records/RESULT_AUDIT.md`
+- 论文记录：`docs/records/PAPER_NOTES.md`
+- 模板变更日志：`docs/rules/TEMPLATE_CHANGELOG.md`

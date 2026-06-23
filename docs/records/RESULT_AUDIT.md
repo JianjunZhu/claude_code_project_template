@@ -8,12 +8,12 @@
 
 ## 0. 与其他文件的分工
 
-- **科研证据（结论账本）** → `docs/EVIDENCE.md`
-- **实验流水** → `docs/EXPERIMENT_LOG.md`
-- **结果审计（本文件）** → `docs/RESULT_AUDIT.md`：对上述结论的复核
-- **当前项目事实** → `docs/PROJECT.md`
+- **科研证据（结论账本）** → `docs/records/EVIDENCE.md`
+- **实验流水** → `docs/records/EXPERIMENT_LOG.md`
+- **结果审计（本文件）** → `docs/records/RESULT_AUDIT.md`：对上述结论的复核
+- **当前项目事实** → `docs/records/PROJECT.md`
 
-审计对象通常是即将进入 `docs/PAPER_NOTES.md`、论文、`<目标期刊>` 投稿或对外汇报的数字与图表。
+审计对象通常是即将进入 `docs/records/PAPER_NOTES.md`、论文、`<目标期刊>` 投稿或对外汇报的数字与图表。
 
 ---
 
@@ -21,13 +21,13 @@
 
 对**每一个**数字 / 表格 / 图，逐项核对（结论用 通过 / 不通过 / 待定 表示）：
 
-1. **可追溯性**：该数字/表格/图是否能追溯到具体 artifact（指标文件/日志/图源/checkpoint）？是否在 `docs/EVIDENCE.md` 有对应条目？
-2. **证据等级如实**：标注的证据等级（1–9，参见 `docs/EVIDENCE.md` 第 1 节）是否与实际产生方式一致？有无把低等级当高等级？
+1. **可追溯性**：该数字/表格/图是否能追溯到具体 artifact（指标文件/日志/图源/checkpoint）？是否在 `docs/records/EVIDENCE.md` 有对应条目？
+2. **证据等级如实**：标注的证据等级（1–9，参见 `docs/records/EVIDENCE.md` 第 1 节）是否与实际产生方式一致？有无把低等级当高等级？
 3. **泄漏检查**：是否存在 holdout / `<外部测试集>` 泄漏？是否在测试集上调过 checkpoint / 阈值 / 架构 / loss，或反复用其选方法？评估前协议/脚本/模型/阈值/配置是否已冻结？
 4. **指标一致性**：同一指标在不同表格/图/正文中是否一致？case-level 与 aggregate 是否口径一致？数据划分是否一致？
-5. **负结果保留**：相关失败运行 / 被否定假设 / 指标不一致是否已保留（在 EVIDENCE.md 或 EXPERIMENT_LOG.md）？是否被悄悄删除？
+5. **负结果保留**：相关失败运行 / 被否定假设 / 指标不一致是否已保留（在 docs/records/EVIDENCE.md 或 docs/records/EXPERIMENT_LOG.md）？是否被悄悄删除？
 6. **无夸大表述**：是否出现"临床有效 / 诊断更优 / 泛化强 / 鲁棒 / state-of-the-art / 可临床使用"等超出证据的措辞？是否应改为谨慎表达？
-7. **统计与回归检验**：凡"提速 / 更优 / 无精度损失 / 显著"类比较，是否给出真实多次采样（$N \ge 7$）、统计显著性（$p$ 值）+ 效应量 + 噪声带，且仅"基线通过 → 候选失败"才计回归？统计量未真实计算的标 `NOT VERIFIED`，**不得虚构**（见 `CLAUDE.md` 第 8 节、`RESEARCH_RULES.md` 第 1 节）。
+7. **统计与回归检验**：凡"提速 / 更优 / 无精度损失 / 显著"类比较，是否给出真实多次采样（$N \ge 7$）、统计显著性（$p$ 值）+ 效应量 + 噪声带，且仅"基线通过 → 候选失败"才计回归？统计量未真实计算的标 `NOT VERIFIED`，**不得虚构**（见 `CLAUDE.md` 第 8 节、`docs/rules/RESEARCH_RULES.md` 第 1 节）。
 
 > 任何一项"不通过"或"待定"都应在下表登记并给出处理动作；未核实项标 PENDING / NOT VERIFIED。
 
@@ -39,7 +39,7 @@
 
 | 被审计结论 | 关联 artifact | 审计结论 | 风险等级 | 处理 |
 | --- | --- | --- | --- | --- |
-| `<主要指标>` 上的 `<TBD>` 数值（来自 `<表格/图编号>`，PENDING / NOT VERIFIED，示例行） | `<指标文件>` / `<图源文件>`（PENDING） | 待定：可追溯性/证据等级/泄漏/一致性均未核实（NOT VERIFIED） | TBD（高/中/低，PENDING） | 待核对 artifact 与 EVIDENCE.md 条目后回填（PENDING） |
+| `<主要指标>` 上的 `<TBD>` 数值（来自 `<表格/图编号>`，PENDING / NOT VERIFIED，示例行） | `<指标文件>` / `<图源文件>`（PENDING） | 待定：可追溯性/证据等级/泄漏/一致性均未核实（NOT VERIFIED） | TBD（高/中/低，PENDING） | 待核对 artifact 与 docs/records/EVIDENCE.md 条目后回填（PENDING） |
 
 字段填写说明：
 

@@ -1,7 +1,7 @@
 # 任务类型配置：software_engineering（软件工程）
 
 > 配置可选，基础模板不依赖任何单一任务类型。
-> 本文件仅在当前项目确属"软件工程"任务时启用；启用方式为在 `docs/PROJECT.md` 标注任务类型并按需引用本文件。所有具体取值用占位符表达，未知=TBD、未验证=PENDING、未确认=NOT VERIFIED、未完成=INCOMPLETE。
+> 本文件仅在当前项目确属"软件工程"任务时启用；启用方式为在 `docs/records/PROJECT.md` 标注任务类型并按需引用本文件。所有具体取值用占位符表达，未知=TBD、未验证=PENDING、未确认=NOT VERIFIED、未完成=INCOMPLETE。
 
 ## 1. 任务目标
 
@@ -53,11 +53,11 @@
 ## 6. 优先查看的文件
 
 1. `CLAUDE.md`（Agent 行为规则与编辑纪律，最优先）。
-2. `docs/PROJECT.md` 与 `docs/TASK_BRIEF.md`（项目事实与范围）。
+2. `docs/records/PROJECT.md` 与 `docs/records/TASK_BRIEF.md`（项目事实与范围）。
 3. 相关源码与既有测试（先查看调用关系再改）。
-4. `docs/RESEARCH_RULES.md`（不可逆操作与 git 纪律）。
+4. `docs/rules/RESEARCH_RULES.md`（不可逆操作与 git 纪律）。
 5. `scripts/` 与 `configs/`（入口与配置约定）。
-6. `docs/EXPERIMENT_LOG.md`（若改动影响科研结果复现）。
+6. `docs/records/EXPERIMENT_LOG.md`（若改动影响科研结果复现）。
 
 ## 7. 典型输出
 

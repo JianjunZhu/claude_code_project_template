@@ -19,7 +19,7 @@
 ## 3. 纪律
 
 - **不改第三方代码**；确需修改用 patch 文件记录改动（`third_party/<名称>.patch`），便于复现与升级。
-- baseline 复现须可追溯：记录 commit、配置、命令；无法复现的 baseline 标 `NOT VERIFIED`，不得直接引用其数值当对比结论（见 `../docs/RESEARCH_RULES.md`）。
+- baseline 复现须可追溯：记录 commit、配置、命令；无法复现的 baseline 标 `NOT VERIFIED`，不得直接引用其数值当对比结论（见 `../docs/rules/RESEARCH_RULES.md`）。
 - 不提交受限 / 隐私 / 含密钥的外部内容。
 
 ## 4. 当前状态

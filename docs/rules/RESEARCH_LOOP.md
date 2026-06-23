@@ -3,7 +3,7 @@
 > 本文件定义本科研模板的**迭代闭环**：整个项目由**三个串联的迭代循环**组成——**① 计划循环 → ② 执行循环 → ③ 写作循环**。每个循环都遵循同一套"**产出 → 独立评审找问题 → 据问题修订 → 迭代直到通过**"的模式，只是作用在不同产物（计划 / 证据 / 论文）上。
 > **薄控制层**：循环只管阶段调度、迭代与收敛判定、状态留痕；每阶段重活**委托已装 ARS 技能与本仓库 `scripts/`**，绝不重造其流水线。
 > 终点 = **一篇满足科研目标与成功判据的学术论文**。
-> 本文件是控制协议，不记录项目事实（`PROJECT.md`）/ 证据账本（`EVIDENCE.md`）/ 逐次流水（`EXPERIMENT_LOG.md`）。本模板内不含真实结果。
+> 本文件是控制协议，不记录项目事实（`docs/records/PROJECT.md`）/ 证据账本（`docs/records/EVIDENCE.md`）/ 逐次流水（`docs/records/EXPERIMENT_LOG.md`）。本模板内不含真实结果。
 
 ---
 
@@ -55,9 +55,9 @@
 
 | 阶段 | 做什么 | 委托 / 工具 | 落点 |
 |---|---|---|---|
-| ① 深度研究 | 摸清现状、gap、可行性，**据此提出 / 确认科研目标与成功判据** | `deep-research`（lit-review / systematic-review） | `PAPER_NOTES.md`、`EVIDENCE.md` |
-| ② 设计 / 修订研究计划 | 拆成可执行步骤：实验设计、数据与划分、指标口径、**实验条件覆盖清单**、可复现要素、算力 / 时间预算 | `deep-research`（research-architect）/ 自拟（**Workflow** 编排）；参 `configs/task_types/<任务类型>.md` | `TASK_BRIEF.md`、本文件 §5 |
-| ③ 评审计划 | 独立 agent **找计划的问题**：claim 是否可证伪、有无泄漏风险、指标口径是否对、条件覆盖是否全、预算是否现实、有无隐藏假设 / 过度乐观 | `academic-paper-reviewer`（methodology focus）/ `deep-research`（devil's-advocate） | `EXPERIMENT_LOG.md` |
+| ① 深度研究 | 摸清现状、gap、可行性，**据此提出 / 确认科研目标与成功判据** | `deep-research`（lit-review / systematic-review） | `docs/records/PAPER_NOTES.md`、`docs/records/EVIDENCE.md` |
+| ② 设计 / 修订研究计划 | 拆成可执行步骤：实验设计、数据与划分、指标口径、**实验条件覆盖清单**、可复现要素、算力 / 时间预算 | `deep-research`（research-architect）/ 自拟（**Workflow** 编排）；参 `configs/task_types/<任务类型>.md` | `docs/records/TASK_BRIEF.md`、本文件 §5 |
+| ③ 评审计划 | 独立 agent **找计划的问题**：claim 是否可证伪、有无泄漏风险、指标口径是否对、条件覆盖是否全、预算是否现实、有无隐藏假设 / 过度乐观 | `academic-paper-reviewer`（methodology focus）/ `deep-research`（devil's-advocate） | `docs/records/EXPERIMENT_LOG.md` |
 
 **③ 的两个去向**：有 critical / major 问题 → 回 **②** 修订计划再评审（计划迭代）；问题清零（无 critical）**＋ 人审确认** → 出环 1，进入环 2。
 **终止**：默认**计划评审 ≤ 4 轮**；连续 2 轮无实质改进或反复振荡 → 停、上报，由人定夺（可能需先补调研）。
@@ -66,12 +66,12 @@
 
 ## 2. 环 2 · 执行循环（迭代直到证据达标）
 
-沿计划执行，反复"执行 → 结果 → 检查 → 判断是否达标 / 是否继续"，直到核心 claim 的**实际证据等级 ≥ 目标等级**（1–9，见 `EVIDENCE.md`）。
+沿计划执行，反复"执行 → 结果 → 检查 → 判断是否达标 / 是否继续"，直到核心 claim 的**实际证据等级 ≥ 目标等级**（1–9，见 `docs/records/EVIDENCE.md`）。
 
 | 阶段 | 做什么 | 委托 / 工具 | 落点 |
 |---|---|---|---|
-| ④ 执行 | **写代码 · 准备 / 测试数据 · 运行 · 检查**（每轮聚焦一处，见下「执行细则」） | `src/` + `scripts/` + 自有技能（第三方放 `third_party/`） | `outputs/<实验>/<run>/`、`EXPERIMENT_LOG.md` |
-| ⑤ 结果 ＋ 报告 | 收集 artifact 与机械化指标、核验可追溯性 / 泄漏 / 一致性，并把本轮汇成研究报告 | 固定评估脚本、`RESULT_AUDIT.md` 清单 | `results/`、`reports/round-<NN>_*.md`、`EVIDENCE.md` |
+| ④ 执行 | **写代码 · 准备 / 测试数据 · 运行 · 检查**（每轮聚焦一处，见下「执行细则」） | `src/` + `scripts/` + 自有技能（第三方放 `third_party/`） | `outputs/<实验>/<run>/`、`docs/records/EXPERIMENT_LOG.md` |
+| ⑤ 结果 ＋ 报告 | 收集 artifact 与机械化指标、核验可追溯性 / 泄漏 / 一致性，并把本轮汇成研究报告 | 固定评估脚本、`docs/records/RESULT_AUDIT.md` 清单 | `results/`、`reports/round-<NN>_*.md`、`docs/records/EVIDENCE.md` |
 | ⑥ 判断 | 达到科研目标？（claim 达标 ＋ 报告可追溯，见 §4） | `academic-paper-reviewer` 独立核 ＋ 人审 | 本文件 §5 |
 
 **⑥ 的去向**：未达标但计划仍成立 → 回 **④ 继续执行 / 补实验**（执行迭代）；**计划本身不足**（设计有误 / 目标不可达）→ **回环 1 的 ②** 重规划；达标 **＋ 人审确认** → 出环 2，进入环 3。
@@ -87,9 +87,9 @@
 
 | 阶段 | 做什么 | 委托 / 工具 | 落点 |
 |---|---|---|---|
-| ⑦ 写初稿 | 据已验证证据写**论文第一版**，**尽量用 Workflow 分章并行** | `academic-paper`（`/ars-outline` → `/ars-full`）＋ Workflow | 稿件、`PAPER_NOTES.md` |
-| ⑧ 审稿 | 独立**审稿人**多视角评审，**提出问题清单**（critical / major / minor） | `academic-paper-reviewer`（`/ars-reviewer`，含 Devil's Advocate，盲化去偏） | `EXPERIMENT_LOG.md` |
-| ⑨ 修订 | 据问题清单逐条修订、回填证据、引用核查 | `academic-paper`（`/ars-revision`）＋ `/ars-citation-check` | 稿件、`PAPER_NOTES.md` |
+| ⑦ 写初稿 | 据已验证证据写**论文第一版**，**尽量用 Workflow 分章并行** | `academic-paper`（`/ars-outline` → `/ars-full`）＋ Workflow | 稿件、`docs/records/PAPER_NOTES.md` |
+| ⑧ 审稿 | 独立**审稿人**多视角评审，**提出问题清单**（critical / major / minor） | `academic-paper-reviewer`（`/ars-reviewer`，含 Devil's Advocate，盲化去偏） | `docs/records/EXPERIMENT_LOG.md` |
+| ⑨ 修订 | 据问题清单逐条修订、回填证据、引用核查 | `academic-paper`（`/ars-revision`）＋ `/ars-citation-check` | 稿件、`docs/records/PAPER_NOTES.md` |
 
 **⑧ ⇄ ⑨ 反复迭代**：审稿 → 修订 → 再审稿，质量逐轮抬升，直到 **⑧ 评审无 critical（达标）** 或触发**终止条件**；达标后 **⑩ 人审定稿**。若审稿暴露**证据缺口** → 回环 2 补实验。
 **终止**：达**最大审稿轮次（默认 ≤ 5 轮）** 或连续 2 轮无实质改进 → 停、上报当前稿与未决问题。
@@ -107,7 +107,7 @@
 
 ## 5. 循环状态表（紧凑，逐轮覆盖更新）
 
-> 单一状态视图；逐轮明细记 `EXPERIMENT_LOG.md`，claim→证据映射记 `PAPER_NOTES.md`，证据等级记 `EVIDENCE.md`。本模板内全为占位符。
+> 单一状态视图；逐轮明细记 `docs/records/EXPERIMENT_LOG.md`，claim→证据映射记 `docs/records/PAPER_NOTES.md`，证据等级记 `docs/records/EVIDENCE.md`。本模板内全为占位符。
 
 | 项 | 值 |
 |---|---|
@@ -129,8 +129,8 @@
 
 ## 关联文档
 
-- Agent 行为总则：`../CLAUDE.md`（第 6 / 8 / 9 / 14 / 15 / 17 节）
-- 科研纪律细则：`./RESEARCH_RULES.md`
-- 论文 claim→证据映射：`./PAPER_NOTES.md`
-- 证据账本：`./EVIDENCE.md` ・ 实验流水：`./EXPERIMENT_LOG.md` ・ 结果审计：`./RESULT_AUDIT.md`
+- Agent 行为总则：`CLAUDE.md`（第 6 / 8 / 9 / 14 / 15 / 17 节）
+- 科研纪律细则：`docs/rules/RESEARCH_RULES.md`
+- 论文 claim→证据映射：`docs/records/PAPER_NOTES.md`
+- 证据账本：`docs/records/EVIDENCE.md` ・ 实验流水：`docs/records/EXPERIMENT_LOG.md` ・ 结果审计：`docs/records/RESULT_AUDIT.md`
 - 任务类型配置：`../configs/task_types/paper_writing.md`、`../configs/task_types/software_engineering.md`

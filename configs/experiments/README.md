@@ -11,7 +11,7 @@
 
 - 一个实验一个配置文件；命名建议 `exp_<主题>_<变体>.{yaml,json}`，便于检索。
 - 必含可复现要素：seed、数据划分（或其 manifest 路径）、关键超参、模型 / 优化器、输出目录。
-- 配置**入 git**；每次运行把所用配置路径与 commit hash 记入 [`../../docs/EXPERIMENT_LOG.md`](../../docs/EXPERIMENT_LOG.md)。
+- 配置**入 git**；每次运行把所用配置路径与 commit hash 记入 [`../../docs/records/EXPERIMENT_LOG.md`](../../docs/records/EXPERIMENT_LOG.md)。
 - 不在配置里写死私有绝对路径 / 密钥；路径用占位符（`<数据路径>`、`<输出目录>`）。
 
 ## 3. 当前状态

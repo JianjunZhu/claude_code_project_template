@@ -21,7 +21,7 @@
 原则：
 
 - **checkpoint、日志、指标大文件、概率图、其他大输出默认不入 git**，用 manifest 记录其存在、位置、生成命令与完整性。
-- 轻量指标文件（CSV/JSON）可入 git，作为结果的可追溯轻 artifact，但其结论是否成立仍依据 `docs/EVIDENCE.md` 的证据等级。
+- 轻量指标文件（CSV/JSON）可入 git，作为结果的可追溯轻 artifact，但其结论是否成立仍依据 `docs/records/EVIDENCE.md` 的证据等级。
 
 ---
 
@@ -50,7 +50,7 @@ outputs/
 
 - 产物清单：文件相对路径、类型、大小、必要的 checksum。
 - 生成信息：commit hash、环境（`<Python解释器>` / `<Conda环境>`）、seed、配置文件、命令行参数、生成命令、生成时间。
-- 对应实验：在 `docs/EXPERIMENT_LOG.md` 中的记录条目，以及在 `docs/EVIDENCE.md` 中对应的证据等级。
+- 对应实验：在 `docs/records/EXPERIMENT_LOG.md` 中的记录条目，以及在 `docs/records/EVIDENCE.md` 中对应的证据等级。
 
 这样每个指标/产物都能回答：结论是什么 / 由哪个 artifact 支持 / artifact 在哪 / 何时生成 / 由什么命令生成 / 属初步还是最终证据。
 

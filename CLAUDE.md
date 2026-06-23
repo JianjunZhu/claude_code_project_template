@@ -14,16 +14,32 @@
 | 类别 | 文件 | 内容 | 判别标准 |
 |---|---|---|---|
 | Agent 行为规则 | `CLAUDE.md`（本文件） | Claude Code 在本项目"怎么工作"的准则、流程、纪律 | 描述的是**做事方式**，与具体项目无关，换一个项目仍成立 |
-| 当前项目事实 | [`docs/PROJECT.md`](docs/PROJECT.md) | 当前项目是什么、目标、数据、环境、路径、状态等**事实** | 描述的是**这个项目此刻的客观情况**，会随项目推进而变化 |
-| 科研证据 | [`docs/EVIDENCE.md`](docs/EVIDENCE.md)、[`docs/EXPERIMENT_LOG.md`](docs/EXPERIMENT_LOG.md) | 结论、指标、实验记录及其支撑 artifact 与证据等级 | 任何**数字、实验结果、被验证/被否定的结论** |
+| 当前项目事实 | [`docs/records/PROJECT.md`](docs/records/PROJECT.md) | 当前项目是什么、目标、数据、环境、路径、状态等**事实** | 描述的是**这个项目此刻的客观情况**，会随项目推进而变化 |
+| 科研证据 | [`docs/records/EVIDENCE.md`](docs/records/EVIDENCE.md)、[`docs/records/EXPERIMENT_LOG.md`](docs/records/EXPERIMENT_LOG.md) | 结论、指标、实验记录及其支撑 artifact 与证据等级 | 任何**数字、实验结果、被验证/被否定的结论** |
 | 长期经验 | [`MEMORY.md`](MEMORY.md) | 跨任务、跨项目反复有用的**长期教训与约定** | 一条经验**下个月、下个任务仍然有用**才写这里 |
 
 落位口诀：
 - "Claude 应该怎么做" → 本文件。
-- "项目现在是什么样" → `docs/PROJECT.md`。
-- "某个结果/数字/结论及其证据" → `docs/EVIDENCE.md`（+ `docs/EXPERIMENT_LOG.md` 的过程记录）。
+- "项目现在是什么样" → `docs/records/PROJECT.md`。
+- "某个结果/数字/结论及其证据" → `docs/records/EVIDENCE.md`（+ `docs/records/EXPERIMENT_LOG.md` 的过程记录）。
 - "以后还会用到的教训" → `MEMORY.md`。
-- 一次性的过程记录、临时调试笔记 → `docs/EXPERIMENT_LOG.md`，**不要**进 `MEMORY.md`。
+- 一次性的过程记录、临时调试笔记 → `docs/records/EXPERIMENT_LOG.md`，**不要**进 `MEMORY.md`。
+
+### 1.1 `docs/` 的两类文件：规则（固定）与记录（随项目更新）
+
+`docs/` 下按**所有权与更新方式**物理分成两个子目录，**不要混用、不要错放**：
+
+| 子目录 | 类别 | 谁拥有 / 何时变 | 包含 |
+|---|---|---|---|
+| [`docs/rules/`](docs/rules/) | **规则文件（固定）** | **模板拥有**；在一个派生项目内**不应改动**，只有当模板升级、经 `scripts/update_from_template.sh` 同步时才更新 | `RESEARCH_RULES.md`、`RESEARCH_LOOP.md`、`TEMPLATE_CHANGELOG.md` |
+| [`docs/records/`](docs/records/) | **记录文件（随项目更新）** | **项目自有**；随项目推进不断追加 / 修改，模板同步脚本**绝不触碰** | `PROJECT.md`、`TASK_BRIEF.md`、`EVIDENCE.md`、`EXPERIMENT_LOG.md`、`RESULT_AUDIT.md`、`PAPER_NOTES.md` |
+
+纪律（直接关系到能否安全升级模板）：
+
+- **不要直接编辑 `docs/rules/*` 或 `CLAUDE.md` 等模板规则文件**。它们由模板维护，`update_from_template.sh` 升级时会**整体覆盖**——你写在那里的项目特异内容会丢失。
+- **项目特异的规则 / 约定 / 偏好写进 `docs/records/PROJECT.md`**（或对应记录文件），那里永远不会被同步脚本覆盖。
+- 模板本身要演进（改规则、加目录、调证据等级等）→ 改的是**模板仓库**，再经 `scripts/update_from_template.sh` 把更新同步到各派生项目（见 [`README.md`](README.md) 第 5.3 节、[`scripts/README.md`](scripts/README.md)）。
+- 一句话：**`rules/` 跟着模板走，`records/` 跟着项目走。** 拿不准一份内容该放哪，先问"它换个项目还成立吗"——成立 → 多半是规则（但仍由模板维护）；只对本项目成立 → 记录。
 
 ---
 
@@ -39,7 +55,7 @@
 
 纪律：
 1. 看到占位符或 TBD/PENDING/NOT VERIFIED/INCOMPLETE，**不要**自行替换成"看起来合理"的值；要么向用户求证，要么保留标记。
-2. 用户提供真实值后，再替换占位符，并在 `docs/PROJECT.md` 留下来源/时间。
+2. 用户提供真实值后，再替换占位符，并在 `docs/records/PROJECT.md` 留下来源/时间。
 3. 不确定就显式说"未知/待确认"，**宁可留白，不可虚构**。
 
 ---
@@ -61,7 +77,7 @@
 - 已产出但未核对 → **PENDING**，并指明等待哪个核对动作。
 - 结论缺证据 → **NOT VERIFIED**，写清还缺什么证据。
 - 完全未知 → **TBD** 或尖括号占位符。
-- 任何写入 `docs/EVIDENCE.md` 的数字/结论，必须能追溯到 artifact（见第 4 节），否则不得写入。
+- 任何写入 `docs/records/EVIDENCE.md` 的数字/结论，必须能追溯到 artifact（见第 4 节），否则不得写入。
 
 ---
 
@@ -69,7 +85,7 @@
 
 ### 4.1 可追溯六问
 
-任何写进 `docs/EVIDENCE.md` 的数字或关键结论，必须能回答以下六问，缺项即标 TBD/PENDING：
+任何写进 `docs/records/EVIDENCE.md` 的数字或关键结论，必须能回答以下六问，缺项即标 TBD/PENDING：
 
 1. **结论是什么？**
 2. **由哪个 artifact 支持？**（日志、指标文件、checkpoint、图表等）
@@ -105,14 +121,14 @@
 - 使用谨慎措辞：**"我们假设 / 预期 / 初步观察到 / 仍需验证 / 当前证据仅支持……"**。
 - 把"结论"与"证据等级"绑定表述，例如："当前证据（等级 4，开发集）仅支持……，能否泛化到 holdout/外部数据 NOT VERIFIED。"
 - 区分"统计上的差异"与"实际/临床意义"，不要混为一谈。
-- 不替用户对外承诺性能；对外口径以 `docs/EVIDENCE.md` 中已达到的最高证据等级为准。
+- 不替用户对外承诺性能；对外口径以 `docs/records/EVIDENCE.md` 中已达到的最高证据等级为准。
 
 ---
 
 ## 6. 负结果保留
 
 - 失败的运行、被否定的假设、数据泄漏风险、指标不一致、复现失败等**负结果必须保留**。
-- 负结果**可归档、不可删除**：移入 [`experiments/records_archive/`](experiments/records_archive/) 并在 `docs/EXPERIMENT_LOG.md` 标注原因，而不是抹掉。
+- 负结果**可归档、不可删除**：移入 [`experiments/records_archive/`](experiments/records_archive/) 并在 `docs/records/EXPERIMENT_LOG.md` 标注原因，而不是抹掉。
 - 负结果与正结果同样是证据；删除负结果等同于伪造研究记录，**禁止**。
 
 ---
@@ -121,7 +137,7 @@
 
 每次实验（哪怕失败）都要可复现、可追溯。
 
-- 过程与原始记录写入 [`docs/EXPERIMENT_LOG.md`](docs/EXPERIMENT_LOG.md)；可被引用的结论与指标沉淀到 [`docs/EVIDENCE.md`](docs/EVIDENCE.md)。
+- 过程与原始记录写入 [`docs/records/EXPERIMENT_LOG.md`](docs/records/EXPERIMENT_LOG.md)；可被引用的结论与指标沉淀到 [`docs/records/EVIDENCE.md`](docs/records/EVIDENCE.md)。
 - 单次实验记录放 [`experiments/records/`](experiments/records/)，结束后归档到 [`experiments/records_archive/`](experiments/records_archive/)。
 - 一条可复现记录至少包含：
   - **commit hash**（代码版本）
@@ -144,7 +160,7 @@
 - **不**在 holdout / 外部测试集上调 checkpoint、阈值、架构、loss。
 - **不**反复在 holdout / 外部测试集上"试方法"来挑选最优；这会让其退化为开发集，等级随之失效。
 - 测试**前**冻结：协议、脚本、模型、阈值、配置；冻结点记录 commit hash 与时间。
-- 一旦发生泄漏（如用测试信息做过选择），**必须如实记录**在 `docs/EXPERIMENT_LOG.md`，并下调相应结论的证据等级。
+- 一旦发生泄漏（如用测试信息做过选择），**必须如实记录**在 `docs/records/EXPERIMENT_LOG.md`，并下调相应结论的证据等级。
 - 方法选择、调参、early stopping 一律在开发集 / 内部验证集（等级 4–5）上完成。
 - **性能 / 指标回归检验**：声称"提速 / 无精度损失 / 无回归"前，对 baseline 与 candidate 各采样 $N \ge 7$ 次，报统计显著性（如 Mann-Whitney $U$ 检验的 $p$ 值）+ 效应量 + 噪声带；只有"基线通过 → 候选失败"才算回归。**采样不足或未真实运行 → 标 `NOT VERIFIED`，不得估算 / 虚构 $p$ 值与效应量**（第 3 节不得编造、RESEARCH_RULES 第 1 节）。
 
@@ -181,7 +197,7 @@
 ### 10.2 Memory
 
 - [`MEMORY.md`](MEMORY.md) **只记长期经验**：反复踩的坑、稳定的约定、跨任务可复用的教训。
-- **临时记录、单次实验过程、调试笔记 → `docs/EXPERIMENT_LOG.md`**，不要塞进 `MEMORY.md`。
+- **临时记录、单次实验过程、调试笔记 → `docs/records/EXPERIMENT_LOG.md`**，不要塞进 `MEMORY.md`。
 - 写入 `MEMORY.md` 前自问："这条经验下个任务还会用到吗？"否，就别写这里。
 
 ---
@@ -191,10 +207,10 @@
 每次首次进入本项目，按序执行：
 
 1. 读本文件 `CLAUDE.md`，确认行为规则与证据等级。
-2. 读 [`docs/PROJECT.md`](docs/PROJECT.md)，了解当前项目事实与状态（多为占位符则说明项目尚未填充）。
-3. 读 [`docs/RESEARCH_RULES.md`](docs/RESEARCH_RULES.md)，确认科研纪律细则。
-4. 读 [`docs/TASK_BRIEF.md`](docs/TASK_BRIEF.md)，了解当前任务（若不存在或为空，说明暂无活动任务）。
-5. 浏览 [`docs/EVIDENCE.md`](docs/EVIDENCE.md) 与 [`docs/EXPERIMENT_LOG.md`](docs/EXPERIMENT_LOG.md)，掌握已有证据与其证据等级。
+2. 读 [`docs/records/PROJECT.md`](docs/records/PROJECT.md)，了解当前项目事实与状态（多为占位符则说明项目尚未填充）。
+3. 读 [`docs/rules/RESEARCH_RULES.md`](docs/rules/RESEARCH_RULES.md)，确认科研纪律细则。
+4. 读 [`docs/records/TASK_BRIEF.md`](docs/records/TASK_BRIEF.md)，了解当前任务（若不存在或为空，说明暂无活动任务）。
+5. 浏览 [`docs/records/EVIDENCE.md`](docs/records/EVIDENCE.md) 与 [`docs/records/EXPERIMENT_LOG.md`](docs/records/EXPERIMENT_LOG.md)，掌握已有证据与其证据等级。
 6. 读 [`MEMORY.md`](MEMORY.md)，吸收长期经验。
 7. 按需查看 [`configs/task_types/`](configs/task_types/) 中与当前 `<任务类型>` 对应的配置说明。
 8. 与用户确认目标与边界后再动手；信息缺失处保留占位符并向用户求证，**不要**用猜测开工。
@@ -203,16 +219,16 @@
 
 ## 12. 新任务流程（8 步）
 
-接到新任务时，按序执行（默认以第 15 节 ultracode 强度执行：实质性、多步骤任务主动起 Workflow 编排并对关键结论做对抗式验证；科研类任务——文献 / 写作 / 评审——优先调用第 17 节所列技能；**以产出论文为终点的任务，按 [`docs/RESEARCH_LOOP.md`](docs/RESEARCH_LOOP.md) 起迭代研究循环**）：
+接到新任务时，按序执行（默认以第 15 节 ultracode 强度执行：实质性、多步骤任务主动起 Workflow 编排并对关键结论做对抗式验证；科研类任务——文献 / 写作 / 评审——优先调用第 17 节所列技能；**以产出论文为终点的任务，按 [`docs/rules/RESEARCH_LOOP.md`](docs/rules/RESEARCH_LOOP.md) 起迭代研究循环**）：
 
-1. 在 [`docs/TASK_BRIEF.md`](docs/TASK_BRIEF.md) **创建或更新**任务简报：目标、范围、输入/输出、验收标准、预期证据等级。
-2. 对照 [`docs/PROJECT.md`](docs/PROJECT.md) 确认所需事实是否已知；未知处用占位符并向用户求证。
+1. 在 [`docs/records/TASK_BRIEF.md`](docs/records/TASK_BRIEF.md) **创建或更新**任务简报：目标、范围、输入/输出、验收标准、预期证据等级。
+2. 对照 [`docs/records/PROJECT.md`](docs/records/PROJECT.md) 确认所需事实是否已知；未知处用占位符并向用户求证。
 3. 给出方案（对应证据等级 1–2：假设 / 设计方案），列出步骤与可能风险。
 4. 实现：编辑代码遵第 9 节，新脚本入 `scripts/`，配置入 `configs/`。
-5. 运行与记录：过程写入 `docs/EXPERIMENT_LOG.md`，单次记录入 `experiments/records/`，满足第 7 节可复现要素；**放量前先按第 14 节做小批量验证**，长任务按第 14 节设哨兵监控，并在不损害正确性/可复现的前提下追求计算效率。
-6. 核对结果：未核对标 PENDING，核对后将可信结论与指标写入 `docs/EVIDENCE.md`，注明证据等级与 artifact 六问。
+5. 运行与记录：过程写入 `docs/records/EXPERIMENT_LOG.md`，单次记录入 `experiments/records/`，满足第 7 节可复现要素；**放量前先按第 14 节做小批量验证**，长任务按第 14 节设哨兵监控，并在不损害正确性/可复现的前提下追求计算效率。
+6. 核对结果：未核对标 PENDING，核对后将可信结论与指标写入 `docs/records/EVIDENCE.md`，注明证据等级与 artifact 六问。
 7. 涉及 holdout/外部测试，严格执行第 8 节冻结纪律；负结果按第 6 节保留归档。
-8. 收尾：更新 `docs/PROJECT.md` 状态，把长期教训沉淀到 `MEMORY.md`，必要时更新本文件与 [`docs/TEMPLATE_CHANGELOG.md`](docs/TEMPLATE_CHANGELOG.md)。
+8. 收尾：更新 `docs/records/PROJECT.md` 状态，把长期教训沉淀到 `MEMORY.md`，必要时更新本文件与 [`docs/rules/TEMPLATE_CHANGELOG.md`](docs/rules/TEMPLATE_CHANGELOG.md)。
 
 ---
 
@@ -221,8 +237,8 @@
 ### 13.1 文档维护
 
 - 文档应**可追加、可审计**：新增内容追加而非覆盖历史；纠正旧结论时保留旧记录并注明更正。
-- 改动事实 → 更新 `docs/PROJECT.md`；改动结论/指标 → 更新 `docs/EVIDENCE.md`；模板本身演进 → 记入 `docs/TEMPLATE_CHANGELOG.md`。
-- 结果审计写入 [`docs/RESULT_AUDIT.md`](docs/RESULT_AUDIT.md)；论文相关笔记写入 [`docs/PAPER_NOTES.md`](docs/PAPER_NOTES.md)。
+- 改动事实 → 更新 `docs/records/PROJECT.md`；改动结论/指标 → 更新 `docs/records/EVIDENCE.md`；模板本身演进 → 记入 `docs/rules/TEMPLATE_CHANGELOG.md`。
+- 结果审计写入 [`docs/records/RESULT_AUDIT.md`](docs/records/RESULT_AUDIT.md)；论文相关笔记写入 [`docs/records/PAPER_NOTES.md`](docs/records/PAPER_NOTES.md)。
 
 ### 13.2 Markdown（须在 VS Code 正常渲染）
 
@@ -248,7 +264,7 @@
 - **计算效率**：在不影响科研结论的前提下，用合适 batch size 提升并行度、启用混合精度 / 合适 dtype、按需多 GPU / 分布式、避免重复计算并缓存可复用的中间结果。
 - **不以正确性换速度**：任何为提速引入的近似、降精度、子采样、提前停止**必须记录**，并确认不影响结论有效性；若可能影响，标 `NOT VERIFIED` 并说明。
 - **效率优化不得破坏纪律**：不得因加速而违反冻结测试纪律（第 8 节）或引入数据泄漏；不得为省时间跳过可复现要素（第 7 节）。
-- **资源使用可追溯**：把 GPU 利用率、吞吐、wall-clock、显存占用作为运行信息记入 `docs/EXPERIMENT_LOG.md`；无真实运行前这些数值为 `PENDING`，不得虚构。
+- **资源使用可追溯**：把 GPU 利用率、吞吐、wall-clock、显存占用作为运行信息记入 `docs/records/EXPERIMENT_LOG.md`；无真实运行前这些数值为 `PENDING`，不得虚构。
 
 ### 14.2 哨兵监察（长任务稳健性 + 防卡死）
 
@@ -261,7 +277,7 @@
   - **网络**：下载 / API / 远程调用超时或挂起、连接中断导致整体停等。
 - **快速处置（别久等）**：判定停滞后先保存现场与失败模式，再按阶梯处置——重试（带 timeout / 退避）→ 重启 / 回滚到最近 checkpoint → 换方法绕过 → **仍不行就停下并上报用户**。给每个长步骤设**超时上限**，超时即触发处置，**不无限等待**。
 - **可实现手段**（按环境择用）：心跳 / 进度日志、定时轮询或调度（如每 30 分钟自检）、watchdog 进程、命令 / 请求一律加 `timeout`、发散即停（NaN 即 abort）、资源与超时告警、checkpoint 定期落盘；自主长跑可用 Claude Code 的定时 / loop 机制周期性自检。
-- **留痕与负结果**：监察发现的停滞及处置写入 `docs/EXPERIMENT_LOG.md`；失败 / 卡死运行属负结果，**归档不删除**（第 6 节），并保留足以复现的上下文（commit hash / 配置 / seed / 数据划分 / 卡在哪一步）。
+- **留痕与负结果**：监察发现的停滞及处置写入 `docs/records/EXPERIMENT_LOG.md`；失败 / 卡死运行属负结果，**归档不删除**（第 6 节），并保留足以复现的上下文（commit hash / 配置 / seed / 数据划分 / 卡在哪一步）。
 
 ### 14.3 小批量先行验证（放量前必做）
 
@@ -271,7 +287,7 @@
 - **通过标准**：小批量结果在量级与方向上合理（非 `NaN`、非恒定、无明显错误），达到**证据等级 3（实现正确性检查）**。注意：**小批量跑通 ≠ 方法有效**——它只证明实现 / 流程正确，不得据此宣称任何科研结论（仍为等级 3，远低于 dev / holdout / 外部）。
 - **再逐步放量**：小批量完全通过后，再扩到大批量 / 全量，并继续按 14.2 设哨兵监控。
 - **为什么必须**：跳过小批量直接全量是高风险——一个实现 bug 可能浪费大量算力与时间，甚至污染结果、误导结论。
-- **记录**：小批量验证作为一次前置检查记入 `docs/EXPERIMENT_LOG.md`（通过前标 `INCOMPLETE` / `PENDING`），通过后再开展正式实验。
+- **记录**：小批量验证作为一次前置检查记入 `docs/records/EXPERIMENT_LOG.md`（通过前标 `INCOMPLETE` / `PENDING`），通过后再开展正式实验。
 
 ---
 
@@ -282,9 +298,9 @@
 - **默认强度**：除非用户另行指定，按 ultracode 处理——以彻底、可验证为第一目标，token 成本不作为约束。
 - **主动编排 Workflow**：对实质性、多步骤、可并行或需交叉验证的任务（理解代码、设计方案、实现、审查、迁移、大范围检索、文献 / 证据核验等），**主动**用 Workflow 分解并并行推进，并对关键结论做对抗式验证（adversarial verify）、必要时加完整性批判后再下结论。
 - **何时单线即可**：纯对话、答疑或一两步即可完成的琐碎改动，直接执行，不必起 workflow（避免无谓开销）。
-- **与科研纪律一致**：并行与多视角验证用于**提升证据质量**，不得用来绕过证据等级、冻结测试（第 8 节）或可追溯要求（第 4、7 节）；workflow 产出的结论同样要落到 `docs/EVIDENCE.md` 并标注证据等级。
+- **与科研纪律一致**：并行与多视角验证用于**提升证据质量**，不得用来绕过证据等级、冻结测试（第 8 节）或可追溯要求（第 4、7 节）；workflow 产出的结论同样要落到 `docs/records/EVIDENCE.md` 并标注证据等级。
 - **与计算效率一致**：编排策略服务于"最正确"，并与第 14 节的计算效率配合——多 agent 编排追求覆盖与确信，算力执行追求高效，二者不冲突。
-- **可被用户降档**：用户显式要求"快速 / 单线 / 低强度"时以用户为准；调整后在 `docs/TASK_BRIEF.md` 注明本任务采用的强度。
+- **可被用户降档**：用户显式要求"快速 / 单线 / 低强度"时以用户为准；调整后在 `docs/records/TASK_BRIEF.md` 注明本任务采用的强度。
 
 ---
 
@@ -315,9 +331,9 @@
 
 使用纪律（**技能不豁免本模板的科研纪律**）：
 
-- **主动但不盲从**：技能是工具 / copilot，其产出仍须过本文件的证据与防造假规则——`deep-research` 的引用必须真实可核验，**不得编造文献**；写作产出中的指标 / 结论须能追溯到 `docs/EVIDENCE.md`，未验证标 `PENDING` / `NOT VERIFIED`。
+- **主动但不盲从**：技能是工具 / copilot，其产出仍须过本文件的证据与防造假规则——`deep-research` 的引用必须真实可核验，**不得编造文献**；写作产出中的指标 / 结论须能追溯到 `docs/records/EVIDENCE.md`，未验证标 `PENDING` / `NOT VERIFIED`。
 - **评审产出是参考意见**：`academic-paper-reviewer` 的评分 / 结论是参考，非客观事实。
-- **产出归档对位**：综述 → `docs/PAPER_NOTES.md` / `docs/EVIDENCE.md`，写作 → 草稿，评审 → 记录；并注明"由 `<技能名>` 生成"。
+- **产出归档对位**：综述 → `docs/records/PAPER_NOTES.md` / `docs/records/EVIDENCE.md`，写作 → 草稿，评审 → 记录；并注明"由 `<技能名>` 生成"。
 - **环境降级要诚实**：若当前环境未安装该技能（如某些 headless / CI 环境），如实说明并降级为手工流程，**不假装已调用**。
 - **许可边界**：CC-BY-NC 仅非商用；涉及商用 / 可能转化的项目先与用户确认。
 - **自有技能另置**：项目自有技能（自己写的）放仓库内 `.claude/skills/` 并提交，可随派生项目继承；第三方插件以本机安装或 `settings.json` 声明引入，不复制进仓库。
@@ -326,18 +342,23 @@
 
 ## 18. 相关文档索引
 
-核心文档：
-- [`docs/PROJECT.md`](docs/PROJECT.md) — 当前项目事实与状态
-- [`docs/TASK_BRIEF.md`](docs/TASK_BRIEF.md) — 当前任务简报
-- [`docs/RESEARCH_RULES.md`](docs/RESEARCH_RULES.md) — 科研纪律细则
-- [`docs/RESEARCH_LOOP.md`](docs/RESEARCH_LOOP.md) — 迭代研究循环控制协议（论文产出主工作流）
-- [`docs/EVIDENCE.md`](docs/EVIDENCE.md) — 结论与证据（含证据等级）
-- [`docs/EXPERIMENT_LOG.md`](docs/EXPERIMENT_LOG.md) — 实验过程记录
-- [`docs/RESULT_AUDIT.md`](docs/RESULT_AUDIT.md) — 结果审计
-- [`docs/PAPER_NOTES.md`](docs/PAPER_NOTES.md) — 论文笔记
-- [`docs/TEMPLATE_CHANGELOG.md`](docs/TEMPLATE_CHANGELOG.md) — 模板变更记录
-- [`MEMORY.md`](MEMORY.md) — 长期经验
-- [`README.md`](README.md) — 模板概览
+规则文件 [`docs/rules/`](docs/rules/)（**固定，模板拥有，仅经 `update_from_template.sh` 同步**）：
+- [`docs/rules/RESEARCH_RULES.md`](docs/rules/RESEARCH_RULES.md) — 科研纪律细则
+- [`docs/rules/RESEARCH_LOOP.md`](docs/rules/RESEARCH_LOOP.md) — 迭代研究循环控制协议（论文产出主工作流）
+- [`docs/rules/TEMPLATE_CHANGELOG.md`](docs/rules/TEMPLATE_CHANGELOG.md) — 模板变更记录
+
+记录文件 [`docs/records/`](docs/records/)（**项目自有，随项目更新，同步脚本绝不触碰**）：
+- [`docs/records/PROJECT.md`](docs/records/PROJECT.md) — 当前项目事实与状态
+- [`docs/records/TASK_BRIEF.md`](docs/records/TASK_BRIEF.md) — 当前任务简报
+- [`docs/records/EVIDENCE.md`](docs/records/EVIDENCE.md) — 结论与证据（含证据等级）
+- [`docs/records/EXPERIMENT_LOG.md`](docs/records/EXPERIMENT_LOG.md) — 实验过程记录
+- [`docs/records/RESULT_AUDIT.md`](docs/records/RESULT_AUDIT.md) — 结果审计
+- [`docs/records/PAPER_NOTES.md`](docs/records/PAPER_NOTES.md) — 论文笔记
+
+根目录：
+- [`CLAUDE.md`](CLAUDE.md) — Agent 行为规则（模板拥有，随模板同步）
+- [`MEMORY.md`](MEMORY.md) — 长期经验（项目自有）
+- [`README.md`](README.md) — 模板概览（模板拥有）
 
 任务类型配置（[`configs/task_types/`](configs/task_types/)）：
 - [`foundation_model.md`](configs/task_types/foundation_model.md)
@@ -364,4 +385,4 @@
 
 ---
 
-> 提醒：本文件定义"怎么做"。一旦发现行为规则与某次实际操作冲突，以本文件为准；若规则本身需要修订，先与用户确认，再更新本文件并记入 `docs/TEMPLATE_CHANGELOG.md`。
+> 提醒：本文件定义"怎么做"。一旦发现行为规则与某次实际操作冲突，以本文件为准；若规则本身需要修订，先与用户确认，再更新本文件并记入 `docs/rules/TEMPLATE_CHANGELOG.md`。

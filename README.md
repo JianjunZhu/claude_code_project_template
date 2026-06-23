@@ -27,16 +27,18 @@ claude_code_project_template/
 ├── MEMORY.md                          # 长期经验 / 教训（跨任务复用，不是当前项目事实）
 ├── README.md                          # 本文件：模板总览与使用指南
 ├── .gitignore                         # git 忽略规则（数据/权重/大输出/缓存/密钥）
-├── docs/                              # 规则与文档
-│   ├── PROJECT.md                     # 当前项目事实（唯一事实源，全部占位符起步）
-│   ├── TASK_BRIEF.md                  # 当前任务简报（这一阶段要做什么）
-│   ├── RESEARCH_RULES.md              # 科研纪律（证据等级、冻结测试、防造假）
-│   ├── RESEARCH_LOOP.md               # 迭代研究循环协议（三环：计划/执行/写作）
-│   ├── EVIDENCE.md                    # 科研证据台账（结论 ↔ artifact 映射）
-│   ├── EXPERIMENT_LOG.md              # 实验流水日志（按时间追加，含负结果）
-│   ├── RESULT_AUDIT.md                # 结果审计（指标一致性、泄漏、复现核查）
-│   ├── PAPER_NOTES.md                 # 论文/写作笔记（主张需有证据支撑）
-│   └── TEMPLATE_CHANGELOG.md          # 模板自身的变更记录
+├── docs/                              # 文档：规则（固定）与记录（随项目更新）分开
+│   ├── rules/                         # 规则文件：模板拥有，固定，仅经 update_from_template.sh 同步
+│   │   ├── RESEARCH_RULES.md          # 科研纪律（证据等级、冻结测试、防造假）
+│   │   ├── RESEARCH_LOOP.md           # 迭代研究循环协议（三环：计划/执行/写作）
+│   │   └── TEMPLATE_CHANGELOG.md      # 模板自身的变更记录
+│   └── records/                       # 记录文件：项目自有，随项目推进更新，同步脚本绝不触碰
+│       ├── PROJECT.md                 # 当前项目事实（唯一事实源，全部占位符起步）
+│       ├── TASK_BRIEF.md              # 当前任务简报（这一阶段要做什么）
+│       ├── EVIDENCE.md                # 科研证据台账（结论 ↔ artifact 映射）
+│       ├── EXPERIMENT_LOG.md          # 实验流水日志（按时间追加，含负结果）
+│       ├── RESULT_AUDIT.md            # 结果审计（指标一致性、泄漏、复现核查）
+│       └── PAPER_NOTES.md             # 论文/写作笔记（主张需有证据支撑）
 ├── configs/
 │   ├── task_types/                    # 各任务类型配置（按需启用，12 个）
 │   └── experiments/                   # 单次实验配置（seed/超参/划分，入 git）
@@ -77,15 +79,15 @@ claude_code_project_template/
 | [MEMORY.md](MEMORY.md) | 长期经验 | 跨任务复用的经验与教训，不记录当前项目的具体事实。 |
 | [README.md](README.md) | 总览 | 模板用途、结构、使用步骤与纪律要点（本文件）。 |
 | [.gitignore](.gitignore) | 配置 | 规定哪些文件不进 git（数据、权重、大输出、缓存、密钥）。 |
-| [docs/PROJECT.md](docs/PROJECT.md) | 项目事实 | 当前项目的唯一事实源：目标、任务类型、数据、环境、路径。 |
-| [docs/TASK_BRIEF.md](docs/TASK_BRIEF.md) | 项目事实 | 当前阶段的任务简报：本轮要交付什么、范围与约束。 |
-| [docs/RESEARCH_RULES.md](docs/RESEARCH_RULES.md) | 科研纪律 | 证据等级、冻结测试纪律、防造假与安全表达规则。 |
-| [docs/RESEARCH_LOOP.md](docs/RESEARCH_LOOP.md) | 工作流 | 三环迭代循环协议（计划/执行/写作），论文产出主流程。 |
-| [docs/EVIDENCE.md](docs/EVIDENCE.md) | 科研证据 | 证据台账：每条结论对应的 artifact、位置、生成命令、等级。 |
-| [docs/EXPERIMENT_LOG.md](docs/EXPERIMENT_LOG.md) | 科研证据 | 按时间追加的实验流水，含失败与负结果。 |
-| [docs/RESULT_AUDIT.md](docs/RESULT_AUDIT.md) | 科研证据 | 对结果做一致性 / 泄漏 / 复现的审计核查。 |
-| [docs/PAPER_NOTES.md](docs/PAPER_NOTES.md) | 写作 | 论文与写作笔记，主张必须可回溯到证据。 |
-| [docs/TEMPLATE_CHANGELOG.md](docs/TEMPLATE_CHANGELOG.md) | 模板维护 | 记录模板本身的演进，与项目事实分离。 |
+| [docs/records/PROJECT.md](docs/records/PROJECT.md) | 项目事实 | 当前项目的唯一事实源：目标、任务类型、数据、环境、路径。 |
+| [docs/records/TASK_BRIEF.md](docs/records/TASK_BRIEF.md) | 项目事实 | 当前阶段的任务简报：本轮要交付什么、范围与约束。 |
+| [docs/rules/RESEARCH_RULES.md](docs/rules/RESEARCH_RULES.md) | 科研纪律 | 证据等级、冻结测试纪律、防造假与安全表达规则。 |
+| [docs/rules/RESEARCH_LOOP.md](docs/rules/RESEARCH_LOOP.md) | 工作流 | 三环迭代循环协议（计划/执行/写作），论文产出主流程。 |
+| [docs/records/EVIDENCE.md](docs/records/EVIDENCE.md) | 科研证据 | 证据台账：每条结论对应的 artifact、位置、生成命令、等级。 |
+| [docs/records/EXPERIMENT_LOG.md](docs/records/EXPERIMENT_LOG.md) | 科研证据 | 按时间追加的实验流水，含失败与负结果。 |
+| [docs/records/RESULT_AUDIT.md](docs/records/RESULT_AUDIT.md) | 科研证据 | 对结果做一致性 / 泄漏 / 复现的审计核查。 |
+| [docs/records/PAPER_NOTES.md](docs/records/PAPER_NOTES.md) | 写作 | 论文与写作笔记，主张必须可回溯到证据。 |
+| [docs/rules/TEMPLATE_CHANGELOG.md](docs/rules/TEMPLATE_CHANGELOG.md) | 模板维护 | 记录模板本身的演进，与项目事实分离。 |
 | [configs/task_types/](configs/task_types/) | 配置 | 各任务类型的配置与约定，按项目实际需要启用。 |
 | [configs/experiments/](configs/experiments/) | 配置 | 单次实验可复现配置（seed/超参/划分），入 git。 |
 | [src/](src/) | 代码 | 项目自有源码（库/模块/模型/数据处理）。 |
@@ -109,11 +111,24 @@ claude_code_project_template/
 | 类别 | 落点文件 | 内容性质 | 典型例子 |
 | --- | --- | --- | --- |
 | **Agent 行为规则** | `CLAUDE.md` | "Agent 该怎么做事"——稳定的协作约束 | 不在 holdout 上调参；不可逆操作需明确指令 |
-| **当前项目事实** | `docs/PROJECT.md`、`docs/TASK_BRIEF.md` | "这个项目此刻是什么"——会随项目变化 | `<研究目标>`、`<数据集名称>`、`<Conda环境>` |
-| **科研证据** | `docs/EVIDENCE.md`、`docs/EXPERIMENT_LOG.md`、`docs/RESULT_AUDIT.md` | "有什么被验证过"——结论与 artifact 的映射 | 某指标由某 checkpoint + 某评估脚本生成（含证据等级） |
+| **当前项目事实** | `docs/records/PROJECT.md`、`docs/records/TASK_BRIEF.md` | "这个项目此刻是什么"——会随项目变化 | `<研究目标>`、`<数据集名称>`、`<Conda环境>` |
+| **科研证据** | `docs/records/EVIDENCE.md`、`docs/records/EXPERIMENT_LOG.md`、`docs/records/RESULT_AUDIT.md` | "有什么被验证过"——结论与 artifact 的映射 | 某指标由某 checkpoint + 某评估脚本生成（含证据等级） |
 | **长期经验** | `MEMORY.md` | "以后做事要记住什么"——跨项目复用 | 某类数据划分易泄漏；某流程容易出错的教训 |
 
 > 关键原则：**项目事实不要写进 `MEMORY.md`，经验不要写进 `PROJECT.md`，未验证的结果不要写进任何文件当成已验证。**
+
+### 4.1 `docs/` 的另一条分界：规则（固定）vs 记录（随项目更新）
+
+上面的"四类内容"按**内容性质**分；`docs/` 还按**所有权与更新方式**正交地分成两类——这决定了升级模板时哪些文件会被覆盖、哪些绝不会动：
+
+| 子目录 | 类别 | 谁拥有 / 何时变 | 文件 |
+| --- | --- | --- | --- |
+| [`docs/rules/`](docs/rules/) | **规则文件（固定）** | **模板拥有**；派生项目内**不应手改**，只在模板升级、经 `scripts/update_from_template.sh` 同步时整体更新 | `RESEARCH_RULES.md`、`RESEARCH_LOOP.md`、`TEMPLATE_CHANGELOG.md` |
+| [`docs/records/`](docs/records/) | **记录文件（随项目更新）** | **项目自有**；随项目推进不断追加 / 修改，同步脚本**绝不触碰** | `PROJECT.md`、`TASK_BRIEF.md`、`EVIDENCE.md`、`EXPERIMENT_LOG.md`、`RESULT_AUDIT.md`、`PAPER_NOTES.md` |
+
+> 一句话：**`rules/` 跟着模板走，`records/` 跟着项目走。** 同理，根目录的 `CLAUDE.md`、`README.md` 也是模板拥有（会被同步覆盖），`MEMORY.md` 是项目自有。
+>
+> **纪律**：项目特异的规则 / 偏好写进 `docs/records/PROJECT.md`，**不要直接改 `docs/rules/*` 或 `CLAUDE.md`**——否则下次 `update_from_template.sh` 升级会覆盖掉你的改动（见第 5.3 节）。
 
 ---
 
@@ -124,7 +139,7 @@ claude_code_project_template/
 在**模板仓库内**运行——最简一条命令（先确保已配 git 身份：`git config --global user.name "你的名字"` 与 `user.email`）：
 
 ```bash
-scripts/bootstrap_new_project.sh -n <新项目名> -r v0.3.3-template
+scripts/bootstrap_new_project.sh -n <新项目名> -r v0.4.0-template
 ```
 
 默认生成在 `../<新项目名>`：**剥离模板 git 历史 → 新建独立仓库（main 分支）→ 写入可追溯派生信息**；不自动 push。常用选项：
@@ -136,25 +151,27 @@ scripts/bootstrap_new_project.sh -n <新项目名> -r v0.3.3-template
 ### 5.2 首次使用步骤（派生后）
 
 1. **先读 [CLAUDE.md](CLAUDE.md)** —— 了解 Agent 在本项目中的行为规则与禁止事项，确保协作从一开始就遵守科研纪律。
-2. **再读 [docs/PROJECT.md](docs/PROJECT.md)** —— 这是当前项目的唯一事实源；把其中的占位符（如 `<项目名称>`、`<任务类型>`、`<研究目标>`、`<数据集名称>`、`<数据路径>`、`<主要指标>`）逐项替换为真实信息，未知项保留为 `TBD`。
-3. **然后读 [docs/TASK_BRIEF.md](docs/TASK_BRIEF.md)** —— 明确"当前这一阶段具体要做什么"，界定范围、交付物与约束。
+2. **再读 [docs/records/PROJECT.md](docs/records/PROJECT.md)** —— 这是当前项目的唯一事实源；把其中的占位符（如 `<项目名称>`、`<任务类型>`、`<研究目标>`、`<数据集名称>`、`<数据路径>`、`<主要指标>`）逐项替换为真实信息，未知项保留为 `TBD`。
+3. **然后读 [docs/records/TASK_BRIEF.md](docs/records/TASK_BRIEF.md)** —— 明确"当前这一阶段具体要做什么"，界定范围、交付物与约束。
 4. **按需启用任务类型配置** —— 在 [configs/task_types/](configs/task_types/) 中选择与本项目匹配的任务类型（如 `segmentation.md`、`benchmark.md`、`paper_writing.md` 等），其余可暂不使用。
-5. **开始记录证据** —— 一旦产生真实运行/结果，先进 [docs/EXPERIMENT_LOG.md](docs/EXPERIMENT_LOG.md)（流水），再把可信结论登记到 [docs/EVIDENCE.md](docs/EVIDENCE.md)（台账），并标注证据等级。
+5. **开始记录证据** —— 一旦产生真实运行/结果，先进 [docs/records/EXPERIMENT_LOG.md](docs/records/EXPERIMENT_LOG.md)（流水），再把可信结论登记到 [docs/records/EVIDENCE.md](docs/records/EVIDENCE.md)（台账），并标注证据等级。
 
 ### 5.3 更新模板规则（模板升级后同步到已派生项目）
 
 派生项目是**独立仓库，不会自动跟随模板**。模板规则更新后，**在项目目录内**运行（要求工作区干净）：
 
 ```bash
-scripts/update_from_template.sh --template <模板路径或URL> -r v0.3.3-template --dry-run
+scripts/update_from_template.sh --template <模板路径或URL> -r v0.4.0-template --dry-run
 ```
 
 确认无误后去掉 `--dry-run` 实跑，再 `git diff` 审阅 → `git add -A && git commit`。要点：
 
-- **只覆盖模板拥有的规则文件**（`CLAUDE.md`、`docs/RESEARCH_RULES.md`、`docs/RESEARCH_LOOP.md`、`configs/task_types/`、脚手架脚本），**绝不触碰项目自有内容**（`PROJECT.md`、`EVIDENCE.md`、实验 / 数据 / 结果 / 代码）。
-- **补缺新目录**（可选 `--scaffold`）：旧项目缺 `src/`、`third_party/`、`results/`、`reports/`、`configs/experiments/`、`data/{raw,processed,validation}/` 等目录时，加 `--scaffold` 会**只新建缺失的脚手架文件、绝不覆盖已有**（已定制的同名文件原样保留），幂等。例：`update_from_template.sh --template <模板> -r v0.3.3-template --scaffold --dry-run`。
+- **只覆盖模板拥有的规则文件**（`CLAUDE.md`、`docs/rules/RESEARCH_RULES.md`、`docs/rules/RESEARCH_LOOP.md`、`docs/rules/TEMPLATE_CHANGELOG.md`、`configs/task_types/`、脚手架脚本），**绝不触碰项目自有内容**（`docs/records/` 下全部记录、实验 / 数据 / 结果 / 代码）。
+- **旧布局自动迁移（v0.4.0-template 关键能力）**：早于本版本派生的项目，文档是**扁平的** `docs/*.md`。新脚本检测到扁平布局时会**一次性迁移到 `docs/rules/` + `docs/records/`**：把项目自有的记录文件（`PROJECT.md`、`EVIDENCE.md` 等）用 `git mv` **移入 `docs/records/`、完整保留你填写的内容**；把扁平旧址的规则文件（`RESEARCH_RULES.md` 等）`git rm` 删除，新版本随同步落到 `docs/rules/`。迁移**幂等**（已迁移则跳过）、**非破坏性**（记录内容不被覆盖，仅移动位置），`--dry-run` 会先预览将移动 / 删除哪些文件。
+  - 可选 `--rewrite-refs`：迁移后顺带把项目记录文件**正文里**对 `docs/<名>.md` 的引用改写为 `docs/{rules,records}/<名>.md`（仅做这一确定性的路径替换，会触碰项目内容，默认关闭）。
+- **补缺新目录**（可选 `--scaffold`）：旧项目缺 `src/`、`third_party/`、`results/`、`reports/`、`configs/experiments/`、`data/{raw,processed,validation}/` 等目录时，加 `--scaffold` 会**只新建缺失的脚手架文件、绝不覆盖已有**（已定制的同名文件原样保留），幂等。例：`update_from_template.sh --template <模板> -r v0.4.0-template --scaffold --dry-run`。
 - 不自动提交；写 `.template-sync` 记录同步来源（ref + commit + 日期）。
-- **纪律**：项目特异规则写进 [docs/PROJECT.md](docs/PROJECT.md)，**不要直接改 `CLAUDE.md` 等模板规则文件**，以免更新时被覆盖。
+- **纪律**：项目特异规则写进 [docs/records/PROJECT.md](docs/records/PROJECT.md)，**不要直接改 `docs/rules/*` 或 `CLAUDE.md` 等模板规则文件**，以免更新时被覆盖。
 
 ### 5.4 建议安装的技能 / 工具（增强协作）
 
@@ -171,7 +188,7 @@ scripts/update_from_template.sh --template <模板路径或URL> -r v0.3.3-templa
 /plugin install academic-research-skills
 ```
 
-- 用法：见 [CLAUDE.md](CLAUDE.md) 第 17 节与 [docs/RESEARCH_LOOP.md](docs/RESEARCH_LOOP.md)（写作 / 评审环委托 ARS）。
+- 用法：见 [CLAUDE.md](CLAUDE.md) 第 17 节与 [docs/rules/RESEARCH_LOOP.md](docs/rules/RESEARCH_LOOP.md)（写作 / 评审环委托 ARS）。
 
 **② codegraph** — 代码知识图谱（Claude Code 的 MCP server，许可 MIT，100% 本地、无需 API key）
 
@@ -255,6 +272,7 @@ scripts/update_from_template.sh --template <模板路径或URL> -r v0.3.3-templa
 一个**合格**的本模板实例，应满足：
 
 - **四类内容分离**：Agent 行为规则、当前项目事实、科研证据、长期经验各归其位，无相互污染。
+- **规则 / 记录分离**：`docs/rules/`（固定，模板拥有，仅经 `update_from_template.sh` 同步）与 `docs/records/`（项目自有，随项目更新）物理分开；规则文件不被项目手改，记录文件不被同步脚本覆盖。
 - **零造假**：除创建日期外无任何未经 artifact 支持的项目事实、指标或结论；未知/未验证项均以占位符或状态标记呈现。
 - **证据可追溯**：每条结论可回溯到 artifact、位置、生成命令、时间与证据等级。
 - **证据等级一致**：全模板共用同一套 1–9 等级，无"低等级当高等级"的表述。

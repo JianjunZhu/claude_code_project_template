@@ -9,10 +9,10 @@
 ## 0. 与其他文件的分工
 
 - **Agent 行为规则** → `CLAUDE.md`
-- **当前项目事实** → `docs/PROJECT.md`
-- **科研证据（本文件）** → `docs/EVIDENCE.md`：结论与其支持 artifact 的对应账本
-- **实验流水** → `docs/EXPERIMENT_LOG.md`：逐次运行的过程记录
-- **结果审计** → `docs/RESULT_AUDIT.md`：对已登记结论的复核
+- **当前项目事实** → `docs/records/PROJECT.md`
+- **科研证据（本文件）** → `docs/records/EVIDENCE.md`：结论与其支持 artifact 的对应账本
+- **实验流水** → `docs/records/EXPERIMENT_LOG.md`：逐次运行的过程记录
+- **结果审计** → `docs/records/RESULT_AUDIT.md`：对已登记结论的复核
 - **长期经验** → `MEMORY.md`
 
 本文件只登记**有证据支持的结论**。没有真实 artifact 支持的内容一律标记 PENDING / NOT VERIFIED / INCOMPLETE，不得当作既成事实。
@@ -77,7 +77,7 @@
 ## 4. 归档与负结果
 
 - 被新证据取代的条目：在原行追加状态（如"已被 `<新条目>` 取代"）并保留，不删除。
-- **负结果必须保留**：失败运行、被否定的假设、数据泄漏风险、指标不一致等，均登记在此或在 `docs/EXPERIMENT_LOG.md` 留痕，可归档不可删除。
+- **负结果必须保留**：失败运行、被否定的假设、数据泄漏风险、指标不一致等，均登记在此或在 `docs/records/EXPERIMENT_LOG.md` 留痕，可归档不可删除。
 - 任何不可逆操作（删除指标/日志/checkpoint/配置）需明确指令，优先归档。
 
 ---

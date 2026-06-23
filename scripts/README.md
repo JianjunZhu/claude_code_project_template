@@ -24,7 +24,7 @@
 
 - 用动词前缀表明用途：`train_` / `eval_` / `prep_` / `plot_` / `analyze_` / `util_`。
 - 名称小写、用下划线分隔；包含任务或对象，便于检索。
-- 避免在脚本名中写入日期或一次性运行编号——运行的时间信息属于 `docs/EXPERIMENT_LOG.md` 与输出 manifest，而非脚本名。
+- 避免在脚本名中写入日期或一次性运行编号——运行的时间信息属于 `docs/records/EXPERIMENT_LOG.md` 与输出 manifest，而非脚本名。
 
 ---
 
@@ -39,8 +39,8 @@
 
 每次重要运行须登记到：
 
-- `docs/EXPERIMENT_LOG.md`：流水总览 + 该次运行的详细记录（命令、环境、seed、配置、输出路径）。
-- `docs/EVIDENCE.md`：该运行支撑的结论及其统一证据等级（1 假设 → 9 独立复现）。
+- `docs/records/EXPERIMENT_LOG.md`：流水总览 + 该次运行的详细记录（命令、环境、seed、配置、输出路径）。
+- `docs/records/EVIDENCE.md`：该运行支撑的结论及其统一证据等级（1 假设 → 9 独立复现）。
 
 ---
 
@@ -56,6 +56,7 @@
 
 - 项目脚本（训练 / 评估 / 数据处理等）：无（空模板）
 - 模板基础设施脚本：`bootstrap_new_project.sh` —— 从模板一键派生新项目（导出指定 ref、重置 git 历史、写入可追溯派生信息）；用法见 `bash scripts/bootstrap_new_project.sh -h`。
-- 模板基础设施脚本：`update_from_template.sh` —— 把模板的规则文件更新到本（已派生）项目，**只覆盖规则、不动项目自有内容**（PROJECT / EVIDENCE / 实验 / 数据 / 结果）；用法见 `bash scripts/update_from_template.sh -h`。
-  - **重要**：项目特异规则请写入 `docs/PROJECT.md`，**不要直接改 `CLAUDE.md` 等模板规则文件**，以免 `update_from_template.sh` 更新时被覆盖。
+- 模板基础设施脚本：`update_from_template.sh` —— 把模板的规则文件（`CLAUDE.md`、`docs/rules/*`、`configs/task_types/`、脚手架脚本）更新到本（已派生）项目，**只覆盖规则、不动项目自有内容**（`docs/records/` 下的 PROJECT / EVIDENCE / 实验 / 数据 / 结果）；用法见 `bash scripts/update_from_template.sh -h`。
+  - **旧布局迁移**：对早于 `v0.4.0-template` 的扁平 `docs/*.md` 项目，会一次性迁移到 `docs/rules/` + `docs/records/`——记录文件 `git mv` 入 `docs/records/`（**保留内容**）、旧扁平规则 `git rm`（新版本随同步落到 `docs/rules/`）；幂等、非破坏、`--dry-run` 预览，并对早于该版本、不含 `docs/rules/` 的 ref **拒绝迁移以防数据丢失**。可选 `--rewrite-refs` 改写项目正文里的 `docs/<名>.md` 引用。
+  - **重要**：项目特异规则请写入 `docs/records/PROJECT.md`，**不要直接改 `docs/rules/*` 或 `CLAUDE.md` 等模板规则文件**，以免 `update_from_template.sh` 更新时被覆盖。
 - 主脚本：`<主脚本>`（TBD）

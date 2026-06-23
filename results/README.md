@@ -5,7 +5,7 @@
 ## 1. 定位（与 outputs/ 的区别）
 
 - [`../outputs/`](../outputs/)：代码运行的**中间产物**（checkpoints / 日志 / 原始预测），体积大，**默认不入 git**。
-- `results/`：从 outputs 中**整理出的、轻量的**结果——指标表（CSV / JSON）、验证结果汇总、图——用于进入 [`../docs/EVIDENCE.md`](../docs/EVIDENCE.md)、[`../docs/PAPER_NOTES.md`](../docs/PAPER_NOTES.md)、论文。**轻量文件入 git**（大文件仍放 `outputs/`，用 manifest 记录）。
+- `results/`：从 outputs 中**整理出的、轻量的**结果——指标表（CSV / JSON）、验证结果汇总、图——用于进入 [`../docs/records/EVIDENCE.md`](../docs/records/EVIDENCE.md)、[`../docs/records/PAPER_NOTES.md`](../docs/records/PAPER_NOTES.md)、论文。**轻量文件入 git**（大文件仍放 `outputs/`，用 manifest 记录）。
 
 ## 2. 可追溯（每个结果都要能回答）
 

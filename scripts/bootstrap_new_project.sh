@@ -106,8 +106,8 @@ mkdir -p "$DIR"
 # 导出模板内容：仅已提交的跟踪文件，不含模板的 .git 历史
 git -C "$TEMPLATE_ROOT" archive --format=tar "$REF" | tar -x -C "$DIR"
 
-# 写入派生信息到 docs/PROJECT.md（插入到 H1 标题之后），不改动占位符正文
-PROJ="$DIR/docs/PROJECT.md"
+# 写入派生信息到 docs/records/PROJECT.md（插入到 H1 标题之后），不改动占位符正文
+PROJ="$DIR/docs/records/PROJECT.md"
 if [[ -f "$PROJ" ]]; then
   BLOCK="$(cat <<EOF
 > **派生信息（由 ${PROG} 自动写入，真实事实，请勿删除）**
@@ -151,7 +151,7 @@ cat <<EOF
 
 下一步：
   1. cd "${ABS_DIR}"
-  2. 按 README「首次使用步骤」填写 docs/PROJECT.md（已写入派生信息，占位符待补）
+  2. 按 README「首次使用步骤」填写 docs/records/PROJECT.md（已写入派生信息，占位符待补）
 EOF
 if [[ -n "$REMOTE" ]]; then
   printf '  3. 推送：git push -u origin main\n'

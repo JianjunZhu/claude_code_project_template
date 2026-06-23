@@ -1,7 +1,7 @@
 # TEMPLATE_CHANGELOG.md —— 模板变更日志
 
 > 用途：记录**本科研项目模板本身**的演进（目录结构、规则、占位文档、配置骨架等），而非某个具体项目的实验进展。
-> 项目级的实验流水请记入 `docs/EXPERIMENT_LOG.md`；长期经验请记入 `MEMORY.md`。
+> 项目级的实验流水请记入 `docs/records/EXPERIMENT_LOG.md`；长期经验请记入 `MEMORY.md`。
 > 顺序约定：**最新条目置顶**。
 
 ---
@@ -32,7 +32,9 @@
 
 | 日期 | 变更 | 原因 | 影响 |
 |---|---|---|---|
-| 2026-06-21 | **里程碑 v0.3.3-template**：固化「建议安装的技能 / 工具」（ARS + codegraph）文档为标签；README 派生 / 更新示例统一 `v0.3.3-template`。 | 标记含 codegraph 工具建议的稳定基线。 | 非破坏性：仅版本引用与标签。 |
+| 2026-06-24 | **里程碑 v0.4.0-template**：把含「规则 / 记录分离 + 旧布局迁移」的状态固化为标签；README 派生 / 更新示例统一改用 `v0.4.0-template`。 | 标记新布局的稳定基线，使 `bootstrap -r v0.4.0-template` 直接派生新结构、`update -r v0.4.0-template` 可迁移旧项目。 | 非破坏性：仅版本引用与标签。 |
+| 2026-06-24 | **docs/ 规则与记录物理分离（BREAKING）**：把 `docs/` 拆成 `docs/rules/`（**规则文件**：`RESEARCH_RULES.md`、`RESEARCH_LOOP.md`、`TEMPLATE_CHANGELOG.md`——模板拥有、固定、仅经 `update_from_template.sh` 同步）与 `docs/records/`（**记录文件**：`PROJECT.md`、`TASK_BRIEF.md`、`EVIDENCE.md`、`EXPERIMENT_LOG.md`、`RESULT_AUDIT.md`、`PAPER_NOTES.md`——项目自有、随项目更新、同步脚本绝不覆盖）。全仓引用（`CLAUDE.md`、`README.md`、`configs/`、各子目录 README、文档互引）同步改为新路径；`CLAUDE.md` 新增 §1.1、`README.md` 新增 §4.1 阐明该分界；`update_from_template.sh` ALLOW 改为 `docs/rules/*`（并把 `TEMPLATE_CHANGELOG.md` 纳入同步）。 | 用户要求：规则文件在一个项目内固定、只随模板更新；记录文件随项目推进而变——二者物理分开，避免误改规则被同步覆盖、或把项目记录误当模板内容。 | **BREAKING**：目录结构变更。已派生的旧（扁平 `docs/*.md`）项目须用 `update_from_template.sh -r v0.4.0-template` 自动迁移（见下条），或手动 `git mv` 记录入 `docs/records/`、规则入 `docs/rules/`。 |
+| 2026-06-24 | **update_from_template.sh 增加旧布局自动迁移**：检测到扁平 `docs/*.md` 时一次性迁移——记录文件 `git mv` 入 `docs/records/`（**保留项目内容**），扁平旧址规则文件 `git rm`（新版本随同步落到 `docs/rules/`）；**幂等**（已迁移则跳过）、**非破坏性**（记录只移动不覆盖）、`--dry-run` 先预览。新增可选 `--rewrite-refs`：迁移后确定性改写项目文件正文里 `docs/<名>.md` → `docs/{rules,records}/<名>.md`（触碰项目内容，默认关闭）。`bootstrap_new_project.sh` 派生信息写入路径改为 `docs/records/PROJECT.md`。 | 让早于 v0.4.0 派生的旧项目能安全、可 review 地迁移到新布局，同时不丢失已填写的记录内容。 | 非破坏性增强（对脚本而言）：默认仅在检测到扁平布局时迁移；新布局项目再次运行为幂等空操作。 |
 | 2026-06-21 | **README 增加「建议安装的技能 / 工具」（§5.4）**：列出 ARS（academic-research-skills，科研全流程，CC-BY-NC）与 **codegraph**（代码知识图谱 MCP，MIT，本地 SQLite+FTS5，亚毫秒查询、文件 watcher 增量同步，省 token / 工具调用；需 `codegraph init` 建索引）——含 codegraph 能力要点、主要工具与安装。`CLAUDE.md` 第 9 节加"编辑前先用 codegraph 理解结构 / 影响面"；`.gitignore` 忽略 `.codegraph/`。 | 把项目推荐的增强工具与 codegraph 特点写入文档。 | 非破坏性：仅新增文档与忽略项；工具为可选增强、未装则降级手工。 |
 | 2026-06-21 | **里程碑 v0.3.2-template**：固化防卡死监察者规则（§14.2）为标签；README 派生 / 更新示例统一改用 `v0.3.2-template`。 | 标记含监察者规则的稳定基线。 | 非破坏性：仅版本引用与标签。 |
 | 2026-06-21 | **哨兵升级为防卡死监察者**：把 `CLAUDE.md` 第 14.2 节从"长任务哨兵"扩为**监察者**角色——定时巡检（默认约 30 分钟、可调），覆盖三类卡死来源（代码/任务逻辑、agent/编排逻辑、网络），每个长步骤设超时上限，停滞即按阶梯快速处置（重试 → 重启/回滚 → 换法 → 上报），不无限等待；`RESEARCH_LOOP.md` 第 4 节挂上"长自主执行须设监察者防卡死"。 | 用户反馈 agent/程序常莫名卡死（代码/代理/网络），需定时监察、尽快处理，不让其长期停滞。 | 非破坏性：扩写既有 §14.2 + 循环一条；复用现有规则。 |

@@ -10,13 +10,13 @@
 ## 0. 与其他文件的分工
 
 - **Agent 行为规则** → `CLAUDE.md`
-- **当前项目事实** → `docs/PROJECT.md`
-- **科研证据（结论账本）** → `docs/EVIDENCE.md`
-- **实验流水（本文件）** → `docs/EXPERIMENT_LOG.md`
-- **结果审计** → `docs/RESULT_AUDIT.md`
+- **当前项目事实** → `docs/records/PROJECT.md`
+- **科研证据（结论账本）** → `docs/records/EVIDENCE.md`
+- **实验流水（本文件）** → `docs/records/EXPERIMENT_LOG.md`
+- **结果审计** → `docs/records/RESULT_AUDIT.md`
 - **长期经验** → `MEMORY.md`（**不要**把临时实验笔记写进这里）
 
-实验产出的可追溯结论登记到 `docs/EVIDENCE.md`；本文件保留产生该结论的运行上下文。
+实验产出的可追溯结论登记到 `docs/records/EVIDENCE.md`；本文件保留产生该结论的运行上下文。
 
 ---
 
@@ -25,7 +25,7 @@
 启动任何实验前，先把下列内容写成一条记录（未知填 TBD，未完成标 INCOMPLETE）：
 
 - **实验目的**：本次运行想回答什么问题。
-- **假设**：预期结果是什么（对应证据等级 1–2，参见 `docs/EVIDENCE.md` 第 1 节）。
+- **假设**：预期结果是什么（对应证据等级 1–2，参见 `docs/records/EVIDENCE.md` 第 1 节）。
 - **命令**：计划执行的完整命令行。
 - **配置路径**：所用配置文件（如 `configs/task_types/<任务类型>.md` 或具体 config）。
 - **数据划分**：train / validation / test 的划分；是否涉及 holdout / `<外部测试集>`。
@@ -53,7 +53,7 @@
 - **下一步**：后续动作或待办（PENDING）。
 
 > 未完成的运行整条标 **INCOMPLETE**，不要删除；恢复后追加续跑记录。
-> 产生了可追溯结论的，记得在 `docs/EVIDENCE.md` 追加对应证据行。
+> 产生了可追溯结论的，记得在 `docs/records/EVIDENCE.md` 追加对应证据行。
 
 ---
 
@@ -66,7 +66,7 @@
 **——— 运行前 ———**
 
 - 实验目的：`<研究目标>` 下验证 `<TBD>`（INCOMPLETE）
-- 假设：预期 `<主要指标>` 为 `<TBD>`（证据等级 1，参见 EVIDENCE.md）（PENDING）
+- 假设：预期 `<主要指标>` 为 `<TBD>`（证据等级 1，参见 docs/records/EVIDENCE.md）（PENDING）
 - 计划命令：`<Python解释器> <主脚本> --config <配置路径> --seed <seed> --output <输出目录>`（TBD）
 - 配置路径：`<配置路径>`（TBD）
 - 数据划分：train / validation / test = `<TBD>`；holdout = `<TBD>`；外部 = `<外部测试集>`（TBD）
@@ -94,7 +94,7 @@
 - 结果摘要：`<TBD>`（PENDING / NOT VERIFIED）
 - 失败模式：`<TBD>`（保留，勿删）（PENDING）
 - 下一步：`<TBD>`（PENDING）
-- 是否已登记到 EVIDENCE.md：否（INCOMPLETE）
+- 是否已登记到 docs/records/EVIDENCE.md：否（INCOMPLETE）
 
 ---
 

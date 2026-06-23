@@ -1,7 +1,7 @@
 # 任务类型配置：grant_writing（基金申请书写作）
 
 > 配置可选，基础模板不依赖任何单一任务类型。
-> 本文件仅在当前项目确属"基金申请书写作"任务时启用；启用方式为在 `docs/PROJECT.md` 标注任务类型并按需引用本文件。所有具体取值用占位符表达，未知=TBD、未验证=PENDING、未确认=NOT VERIFIED、未完成=INCOMPLETE。
+> 本文件仅在当前项目确属"基金申请书写作"任务时启用；启用方式为在 `docs/records/PROJECT.md` 标注任务类型并按需引用本文件。所有具体取值用占位符表达，未知=TBD、未验证=PENDING、未确认=NOT VERIFIED、未完成=INCOMPLETE。
 
 ## 1. 任务目标
 
@@ -15,7 +15,7 @@
 
 - 申请书各章节草稿（研究背景、内容、方案、可行性、基础，路径 TBD）。
 - 工作阶段标注表：每项工作标注"已完成/在研/拟开展"。
-- 预研证据清单：已完成部分链接 `docs/EVIDENCE.md` 与 artifact。
+- 预研证据清单：已完成部分链接 `docs/records/EVIDENCE.md` 与 artifact。
 - 研究计划与里程碑（拟开展部分，时间线 TBD）。
 - 参考文献与前期成果清单。
 - 实验记录：`experiments/records/` 中作为预研依据的来源。
@@ -50,11 +50,11 @@
 
 ## 6. 优先查看的文件
 
-1. `docs/EVIDENCE.md`（预研证据来源，最优先）。
-2. `docs/PROJECT.md` 与 `docs/TASK_BRIEF.md`（项目事实与方向）。
-3. `docs/EXPERIMENT_LOG.md`（前期工作记录）。
-4. `docs/RESULT_AUDIT.md`（预研数字核验）。
-5. `docs/RESEARCH_RULES.md`（科研安全表达纪律）。
+1. `docs/records/EVIDENCE.md`（预研证据来源，最优先）。
+2. `docs/records/PROJECT.md` 与 `docs/records/TASK_BRIEF.md`（项目事实与方向）。
+3. `docs/records/EXPERIMENT_LOG.md`（前期工作记录）。
+4. `docs/records/RESULT_AUDIT.md`（预研数字核验）。
+5. `docs/rules/RESEARCH_RULES.md`（科研安全表达纪律）。
 6. `CLAUDE.md`（Agent 行为规则）。
 
 ## 7. 典型输出
