@@ -219,7 +219,7 @@
 
 ## 12. 新任务流程（8 步）
 
-接到新任务时，按序执行（默认以第 15 节 ultracode 强度执行：实质性、多步骤任务主动起 Workflow 编排并对关键结论做对抗式验证；科研类任务——文献 / 写作 / 评审——优先调用第 17 节所列技能；**以产出论文为终点的任务，按 [`docs/rules/RESEARCH_LOOP.md`](docs/rules/RESEARCH_LOOP.md) 起迭代研究循环**）：
+接到新任务时，按序执行（默认以第 15 节 ultracode 强度执行：实质性、多步骤任务主动起 Workflow 编排并对关键结论做对抗式验证；科研类任务——文献 / 写作 / 评审——优先调用第 17 节所列技能；**以产出论文为终点的任务，按 [`docs/rules/RESEARCH_LOOP.md`](docs/rules/RESEARCH_LOOP.md) 起迭代研究循环**；**非以论文为终点的任务（纯软件工程 / 数据分析 / 探索等）直接按本节 1–8 步执行，不必进 RESEARCH_LOOP**）：
 
 1. 在 [`docs/records/TASK_BRIEF.md`](docs/records/TASK_BRIEF.md) **创建或更新**任务简报：目标、范围、输入/输出、验收标准、预期证据等级。
 2. 对照 [`docs/records/PROJECT.md`](docs/records/PROJECT.md) 确认所需事实是否已知；未知处用占位符并向用户求证。
@@ -360,7 +360,7 @@
 - [`MEMORY.md`](MEMORY.md) — 长期经验（项目自有）
 - [`README.md`](README.md) — 模板概览（模板拥有）
 
-任务类型配置（[`configs/task_types/`](configs/task_types/)）：
+任务类型配置（[`configs/task_types/`](configs/task_types/)，**按需选用一个或数个、并非全须使用**；与本项目无关的类型直接忽略）：
 - [`foundation_model.md`](configs/task_types/foundation_model.md)
 - [`segmentation.md`](configs/task_types/segmentation.md)
 - [`completion.md`](configs/task_types/completion.md)

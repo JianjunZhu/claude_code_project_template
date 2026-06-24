@@ -77,8 +77,8 @@ git -C "$TEMPLATE_ROOT" config user.email >/dev/null 2>&1 \
 # 目标目录（默认 ../<名称>）
 [[ -n "$DIR" ]] || DIR="$(dirname "$TEMPLATE_ROOT")/$NAME"
 if [[ -e "$DIR" ]]; then
-  if [[ -d "$DIR" && -z "$(ls -A "$DIR" 2>/dev/null)" ]]; then
-    : # 空目录可用
+  if [[ -d "$DIR" && -z "$(find "$DIR" -mindepth 1 -maxdepth 1 2>/dev/null)" ]]; then
+    : # 空目录可用（find 比 ls -A 更稳：不受扩展属性 / 别名影响）
   elif [[ "$FORCE" -eq 1 ]]; then
     printf 'WARN: 目标已存在且非空，--force 继续：%s\n' "$DIR" >&2
   else
@@ -122,6 +122,7 @@ if [[ -f "$PROJ" ]]; then
 EOF
 )"
   TMP="$(mktemp)"
+  trap 'rm -f "$TMP"' EXIT   # 早退 / 出错也不留临时文件孤儿（mv 成功后 rm -f 为无害空操作）
   { head -n 1 "$PROJ"; printf '\n%s\n' "$BLOCK"; tail -n +2 "$PROJ"; } > "$TMP"
   mv "$TMP" "$PROJ"
 fi

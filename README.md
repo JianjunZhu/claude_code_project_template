@@ -26,6 +26,8 @@ claude_code_project_template/
 ├── CLAUDE.md                          # Agent 行为规则（Agent 读这里决定怎么做事）
 ├── MEMORY.md                          # 长期经验 / 教训（跨任务复用，不是当前项目事实）
 ├── README.md                          # 本文件：模板总览与使用指南
+├── QUICKSTART.md                      # 5 分钟上手（首次填写清单 + 合成示例）
+├── .editorconfig                      # 统一编辑器格式（lf/文末空行/缩进，保证一致渲染）
 ├── .gitignore                         # git 忽略规则（数据/权重/大输出/缓存/密钥）
 ├── docs/                              # 文档：规则（固定）与记录（随项目更新）分开
 │   ├── rules/                         # 规则文件：模板拥有，固定，仅经 update_from_template.sh 同步
@@ -46,6 +48,7 @@ claude_code_project_template/
 ├── scripts/                           # 运行入口脚本（train_/eval_/prep_/plot_）+ 模板工具
 │   ├── bootstrap_new_project.sh       # 从模板一键派生新项目
 │   ├── update_from_template.sh        # 把模板规则更新到已派生项目（不动项目内容）
+│   ├── check_template.sh              # 模板自检 linter（机械不变量，可挂 pre-commit/CI）
 │   └── README.md                      # 脚本目录约定
 ├── third_party/                       # 第三方/下载代码（baseline/克隆仓库，不入 git，用 manifest）
 ├── data/                              # 数据（不入 git，用 manifest+checksum）
@@ -78,6 +81,8 @@ claude_code_project_template/
 | [CLAUDE.md](CLAUDE.md) | Agent 行为规则 | 规定 Agent 在本项目里如何工作、能做什么、禁止什么。 |
 | [MEMORY.md](MEMORY.md) | 长期经验 | 跨任务复用的经验与教训，不记录当前项目的具体事实。 |
 | [README.md](README.md) | 总览 | 模板用途、结构、使用步骤与纪律要点（本文件）。 |
+| [QUICKSTART.md](QUICKSTART.md) | 上手 | 5 分钟上手：派生 → 首次填写清单 → 一个明确标注的合成示例。 |
+| [.editorconfig](.editorconfig) | 配置 | 统一编辑器格式（lf / 文末空行 / 缩进），保证文档一致渲染。 |
 | [.gitignore](.gitignore) | 配置 | 规定哪些文件不进 git（数据、权重、大输出、缓存、密钥）。 |
 | [docs/records/PROJECT.md](docs/records/PROJECT.md) | 项目事实 | 当前项目的唯一事实源：目标、任务类型、数据、环境、路径。 |
 | [docs/records/TASK_BRIEF.md](docs/records/TASK_BRIEF.md) | 项目事实 | 当前阶段的任务简报：本轮要交付什么、范围与约束。 |
@@ -95,6 +100,7 @@ claude_code_project_template/
 | [scripts/](scripts/) | 代码 | 运行入口脚本 + 模板工具，配合 commit hash 与配置使用。 |
 | [scripts/bootstrap_new_project.sh](scripts/bootstrap_new_project.sh) | 工具 | 从模板一键派生新项目（重置 git 历史 + 可追溯派生信息）。 |
 | [scripts/update_from_template.sh](scripts/update_from_template.sh) | 工具 | 把模板规则更新到已派生项目（只覆盖规则、不动项目内容）。 |
+| [scripts/check_template.sh](scripts/check_template.sh) | 工具 | 模板自检 linter：机械不变量（无扁平引用、链接可解析、无 math 围栏、脚本语法等），可挂 pre-commit/CI。 |
 | [scripts/README.md](scripts/README.md) | 说明 | 脚本目录的命名、可复现与记录约定。 |
 | [experiments/README.md](experiments/README.md) | 说明 | 实验记录目录约定（records / records_archive 分工）。 |
 | [experiments/records/](experiments/records/) | 科研证据 | 活跃实验的记录目录。 |
@@ -149,6 +155,8 @@ scripts/bootstrap_new_project.sh -n <新项目名> -r v0.4.0-template
 - 换台机器：先 `git clone <模板URL>`，进入后再运行上面的命令并用 `-d` 指定目标目录。
 
 ### 5.2 首次使用步骤（派生后）
+
+> 想更快上手：[QUICKSTART.md](QUICKSTART.md) 提供勾选清单与一个明确标注的合成示例。下面是详版步骤：
 
 1. **先读 [CLAUDE.md](CLAUDE.md)** —— 了解 Agent 在本项目中的行为规则与禁止事项，确保协作从一开始就遵守科研纪律。
 2. **再读 [docs/records/PROJECT.md](docs/records/PROJECT.md)** —— 这是当前项目的唯一事实源；把其中的占位符（如 `<项目名称>`、`<任务类型>`、`<研究目标>`、`<数据集名称>`、`<数据路径>`、`<主要指标>`）逐项替换为真实信息，未知项保留为 `TBD`。
@@ -215,6 +223,8 @@ scripts/update_from_template.sh --template <模板路径或URL> -r v0.4.0-templa
   - 实验未完成 → **INCOMPLETE**
 
 ### 6.2 统一证据等级（低 → 高，全模板引用同一套）
+
+> 权威定义见 [docs/rules/RESEARCH_RULES.md](docs/rules/RESEARCH_RULES.md) 第 0 节（单一来源，避免多处描述漂移）；下表为速查。
 
 | 等级 | 含义 |
 | --- | --- |

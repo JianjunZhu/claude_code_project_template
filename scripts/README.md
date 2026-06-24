@@ -59,4 +59,5 @@
 - 模板基础设施脚本：`update_from_template.sh` —— 把模板的规则文件（`CLAUDE.md`、`docs/rules/*`、`configs/task_types/`、脚手架脚本）更新到本（已派生）项目，**只覆盖规则、不动项目自有内容**（`docs/records/` 下的 PROJECT / EVIDENCE / 实验 / 数据 / 结果）；用法见 `bash scripts/update_from_template.sh -h`。
   - **旧布局迁移**：对早于 `v0.4.0-template` 的扁平 `docs/*.md` 项目，会一次性迁移到 `docs/rules/` + `docs/records/`——记录文件 `git mv` 入 `docs/records/`（**保留内容**）、旧扁平规则 `git rm`（新版本随同步落到 `docs/rules/`）；幂等、非破坏、`--dry-run` 预览，并对早于该版本、不含 `docs/rules/` 的 ref **拒绝迁移以防数据丢失**。可选 `--rewrite-refs` 改写项目正文里的 `docs/<名>.md` 引用。
   - **重要**：项目特异规则请写入 `docs/records/PROJECT.md`，**不要直接改 `docs/rules/*` 或 `CLAUDE.md` 等模板规则文件**，以免 `update_from_template.sh` 更新时被覆盖。
+- 模板基础设施脚本：`check_template.sh` —— 模板自检 linter，检查**机械不变量**（无扁平 `docs/<名>.md` 引用、所有 `.md` 链接可解析、无 ` ```math ` 围栏、所有 `.sh` 过 `bash -n`、ALLOW 文件齐备、`docs/rules`+`docs/records` 结构完整、追加式目录有 `.gitkeep`）；有失败则退出码非 0，适合挂 pre-commit / CI。**仅机械检查，不替代证据纪律与人审的语义反造假**。用法 `bash scripts/check_template.sh`（或 `--quiet`）。
 - 主脚本：`<主脚本>`（TBD）

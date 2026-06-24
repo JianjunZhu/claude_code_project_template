@@ -30,12 +30,15 @@ PROG="$(basename "$0")"
 # —— 模板拥有的文件（会被同步 / 覆盖）。项目自有内容一律不在此列，故不会被动到。——
 ALLOW=(
   CLAUDE.md
+  QUICKSTART.md
+  .editorconfig
   docs/rules/RESEARCH_RULES.md
   docs/rules/RESEARCH_LOOP.md
   docs/rules/TEMPLATE_CHANGELOG.md
   configs/task_types
   scripts/bootstrap_new_project.sh
   scripts/update_from_template.sh
+  scripts/check_template.sh
 )
 
 # —— 旧→新布局迁移：扁平 docs/<名>.md 的归属 ——
@@ -79,6 +82,7 @@ PAPER_NOTES / TASK_BRIEF）与实验 / 数据 / 结果 / 代码。
                           只新建缺失文件、绝不覆盖已有，适合让旧项目补上新目录结构
       --rewrite-refs      迁移后把项目文件正文里对 docs/<名>.md 的引用确定性改写为
                           docs/{rules,records}/<名>.md（会触碰项目内容，默认关闭）
+      --timeout <秒>      给远程克隆加超时上限（需系统有 timeout/gtimeout，否则忽略并提示）
       --dry-run           只预览将迁移 / 更新 / 新建哪些文件，不写入
   -f, --force             工作区不干净时仍继续（默认要求干净，便于 review）
   -h, --help
@@ -87,9 +91,9 @@ PAPER_NOTES / TASK_BRIEF）与实验 / 数据 / 结果 / 代码。
   布局迁移（自动，幂等）：扁平 docs/{PROJECT,TASK_BRIEF,EVIDENCE,EXPERIMENT_LOG,RESULT_AUDIT,
     PAPER_NOTES}.md → git mv 入 docs/records/（保留内容）；扁平 docs/{RESEARCH_RULES,
     RESEARCH_LOOP,TEMPLATE_CHANGELOG}.md → git rm（新版本随同步落到 docs/rules/）。
-  规则文件（会覆盖）：CLAUDE.md, docs/rules/RESEARCH_RULES.md, docs/rules/RESEARCH_LOOP.md,
-    docs/rules/TEMPLATE_CHANGELOG.md, configs/task_types/*, scripts/bootstrap_new_project.sh,
-    scripts/update_from_template.sh
+  规则文件（会覆盖）：CLAUDE.md, QUICKSTART.md, .editorconfig, docs/rules/RESEARCH_RULES.md,
+    docs/rules/RESEARCH_LOOP.md, docs/rules/TEMPLATE_CHANGELOG.md, configs/task_types/*,
+    scripts/{bootstrap_new_project,update_from_template,check_template}.sh
   脚手架（仅 --scaffold，只补缺不覆盖）：src/README.md, third_party/README.md, results/README.md,
     reports/{README,SUMMARY}.md, reports/archive/.gitkeep, configs/experiments/README.md,
     data/{raw,processed,validation}/.gitkeep
@@ -99,11 +103,12 @@ die() { printf 'ERROR: %s\n' "$1" >&2; exit 1; }
 
 need_val() { [[ -n "${2:-}" && "${2:-}" != -* ]] || die "$1 需要一个值（且不能以 - 开头）"; }
 
-TPL=""; REF="main"; DRY=0; FORCE=0; SCAFFOLD=0; REWRITE=0
+TPL=""; REF="main"; DRY=0; FORCE=0; SCAFFOLD=0; REWRITE=0; TIMEOUT=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --template)     need_val "$1" "${2:-}"; TPL="$2"; shift 2;;
     -r|--ref)       need_val "$1" "${2:-}"; REF="$2"; shift 2;;
+    --timeout)      need_val "$1" "${2:-}"; TIMEOUT="$2"; shift 2;;
     --scaffold)     SCAFFOLD=1; shift;;
     --rewrite-refs) REWRITE=1; shift;;
     --dry-run)      DRY=1; shift;;
@@ -112,6 +117,14 @@ while [[ $# -gt 0 ]]; do
     *)              die "未知参数：$1（用 -h 查看用法）";;
   esac
 done
+
+# 解析可选超时前缀（仅在 --timeout 给定且系统有 timeout/gtimeout 时生效；否则提示并忽略）
+TO_PREFIX=()
+if [[ -n "$TIMEOUT" ]]; then
+  if   command -v timeout  >/dev/null 2>&1; then TO_PREFIX=(timeout  "$TIMEOUT")
+  elif command -v gtimeout >/dev/null 2>&1; then TO_PREFIX=(gtimeout "$TIMEOUT")
+  else printf 'WARN: 未找到 timeout/gtimeout，--timeout 被忽略（macOS 可 brew install coreutils 获得 gtimeout）。\n' >&2; fi
+fi
 
 CLEANUP=""; STAGE=""; SCAF_STAGE=""
 _cleanup() { [[ -n "$CLEANUP" ]] && rm -rf "$CLEANUP"; [[ -n "$STAGE" ]] && rm -rf "$STAGE"; [[ -n "$SCAF_STAGE" ]] && rm -rf "$SCAF_STAGE"; return 0; }
@@ -148,7 +161,8 @@ if [[ -z "$TPL" ]]; then
 fi
 if [[ "$TPL" == *://* || "$TPL" == *@*:* ]]; then
   CLEANUP="$(mktemp -d)"
-  git clone --quiet "$TPL" "$CLEANUP" || die "克隆模板失败：$TPL"
+  ${TO_PREFIX[@]+"${TO_PREFIX[@]}"} git clone --quiet "$TPL" "$CLEANUP" \
+    || die "克隆模板失败：$TPL（如超时，可调大 --timeout 或检查网络）"
   TPLDIR="$CLEANUP"
 else
   TPLDIR="$(cd "$TPL" 2>/dev/null && pwd)" || die "模板路径不存在：$TPL"

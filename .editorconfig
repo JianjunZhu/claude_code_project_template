@@ -1,0 +1,23 @@
+# .editorconfig —— 统一编辑器格式，保证文档在 VS Code 等正常一致渲染
+# 说明见 https://editorconfig.org 。本文件由模板维护，随 update_from_template.sh 同步。
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Markdown：行尾两个空格是"硬换行"语法，故不裁剪行尾空格
+[*.md]
+trim_trailing_whitespace = false
+
+# Shell 脚本：用 2 空格缩进（与本仓库脚本一致）
+[*.sh]
+indent_size = 2
+
+# Makefile 必须用 Tab
+[Makefile]
+indent_style = tab
