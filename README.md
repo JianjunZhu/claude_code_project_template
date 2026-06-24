@@ -145,7 +145,7 @@ claude_code_project_template/
 在**模板仓库内**运行——最简一条命令（先确保已配 git 身份：`git config --global user.name "你的名字"` 与 `user.email`）：
 
 ```bash
-scripts/bootstrap_new_project.sh -n <新项目名> -r v0.4.0-template
+scripts/bootstrap_new_project.sh -n <新项目名> -r v0.4.1-template
 ```
 
 默认生成在 `../<新项目名>`：**剥离模板 git 历史 → 新建独立仓库（main 分支）→ 写入可追溯派生信息**；不自动 push。常用选项：
@@ -169,7 +169,7 @@ scripts/bootstrap_new_project.sh -n <新项目名> -r v0.4.0-template
 派生项目是**独立仓库，不会自动跟随模板**。模板规则更新后，**在项目目录内**运行（要求工作区干净）：
 
 ```bash
-scripts/update_from_template.sh --template <模板路径或URL> -r v0.4.0-template --dry-run
+scripts/update_from_template.sh --template <模板路径或URL> -r v0.4.1-template --dry-run
 ```
 
 确认无误后去掉 `--dry-run` 实跑，再 `git diff` 审阅 → `git add -A && git commit`。要点：
@@ -177,7 +177,7 @@ scripts/update_from_template.sh --template <模板路径或URL> -r v0.4.0-templa
 - **只覆盖模板拥有的规则文件**（`CLAUDE.md`、`docs/rules/RESEARCH_RULES.md`、`docs/rules/RESEARCH_LOOP.md`、`docs/rules/TEMPLATE_CHANGELOG.md`、`configs/task_types/`、脚手架脚本），**绝不触碰项目自有内容**（`docs/records/` 下全部记录、实验 / 数据 / 结果 / 代码）。
 - **旧布局自动迁移（v0.4.0-template 关键能力）**：早于本版本派生的项目，文档是**扁平的** `docs/*.md`。新脚本检测到扁平布局时会**一次性迁移到 `docs/rules/` + `docs/records/`**：把项目自有的记录文件（`PROJECT.md`、`EVIDENCE.md` 等）用 `git mv` **移入 `docs/records/`、完整保留你填写的内容**；把扁平旧址的规则文件（`RESEARCH_RULES.md` 等）`git rm` 删除，新版本随同步落到 `docs/rules/`。迁移**幂等**（已迁移则跳过）、**非破坏性**（记录内容不被覆盖，仅移动位置），`--dry-run` 会先预览将移动 / 删除哪些文件。
   - 可选 `--rewrite-refs`：迁移后顺带把项目记录文件**正文里**对 `docs/<名>.md` 的引用改写为 `docs/{rules,records}/<名>.md`（仅做这一确定性的路径替换，会触碰项目内容，默认关闭）。
-- **补缺新目录**（可选 `--scaffold`）：旧项目缺 `src/`、`third_party/`、`results/`、`reports/`、`configs/experiments/`、`data/{raw,processed,validation}/` 等目录时，加 `--scaffold` 会**只新建缺失的脚手架文件、绝不覆盖已有**（已定制的同名文件原样保留），幂等。例：`update_from_template.sh --template <模板> -r v0.4.0-template --scaffold --dry-run`。
+- **补缺新目录**（可选 `--scaffold`）：旧项目缺 `src/`、`third_party/`、`results/`、`reports/`、`configs/experiments/`、`data/{raw,processed,validation}/` 等目录时，加 `--scaffold` 会**只新建缺失的脚手架文件、绝不覆盖已有**（已定制的同名文件原样保留），幂等。例：`update_from_template.sh --template <模板> -r v0.4.1-template --scaffold --dry-run`。
 - 不自动提交；写 `.template-sync` 记录同步来源（ref + commit + 日期）。
 - **纪律**：项目特异规则写进 [docs/records/PROJECT.md](docs/records/PROJECT.md)，**不要直接改 `docs/rules/*` 或 `CLAUDE.md` 等模板规则文件**，以免更新时被覆盖。
 
