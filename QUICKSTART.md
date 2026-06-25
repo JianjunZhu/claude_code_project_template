@@ -8,7 +8,7 @@
 ## 1. 派生一个新项目（在模板仓库内）
 
 ```bash
-scripts/bootstrap_new_project.sh -n <新项目名> -r v0.4.1-template
+scripts/bootstrap_new_project.sh -n <新项目名> -r v0.4.2-template
 ```
 
 生成在 `../<新项目名>`：剥离模板 git 历史 → 新建独立仓库 → 写入可追溯派生信息。详见 [`README.md`](README.md) 第 5.1 节。
