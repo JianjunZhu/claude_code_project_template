@@ -76,7 +76,7 @@ PAPER_NOTES / TASK_BRIEF）与实验 / 数据 / 结果 / 代码。
   （或事先 git remote add template <url>，则可省略 --template）
 
 可选：
-  -r, --ref <ref>         模板 ref（默认 main；建议用 tag，如 v0.4.2-template）
+  -r, --ref <ref>         模板 ref（默认 main；建议用 tag，如 v0.4.3-template）
       --scaffold          额外补缺新目录脚手架（src/ third_party/ results/ reports/
                           configs/experiments/ data/{raw,processed,validation}/ 的约定文件）；
                           只新建缺失文件、绝不覆盖已有，适合让旧项目补上新目录结构
@@ -186,7 +186,7 @@ SPECS=(); for a in "${ALLOW[@]}"; do exists "$a" && SPECS+=("$a"); done
 #    否则会删掉扁平规则却无新版本可同步，导致项目缺失规则文件。早于 v0.4.0-template 的 ref 在此拒绝。——
 if [[ ${#MIG_RM[@]} -gt 0 || ${#MIG_MV_SRC[@]} -gt 0 ]]; then
   exists "docs/rules/RESEARCH_RULES.md" \
-    || die "模板 ref ${REF} 不含 docs/rules/（早于 v0.4.0-template）；为避免删除扁平规则却无新版本同步，已拒绝迁移。请改用 -r v0.4.2-template 或更新的 ref。"
+    || die "模板 ref ${REF} 不含 docs/rules/（早于 v0.4.0-template）；为避免删除扁平规则却无新版本同步，已拒绝迁移。请改用 -r v0.4.3-template 或更新的 ref。"
 fi
 
 # 先暂存到临时目录，逐文件分类（新增 / 更新 / 未变），既支持 dry-run 也避免半途写坏
