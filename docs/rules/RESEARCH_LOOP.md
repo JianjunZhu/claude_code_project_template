@@ -45,7 +45,7 @@
 | 研究架构师 | 对每个候选 RQ 拆成可执行步骤：实验设计、数据划分、指标口径、条件覆盖、可复现要素、算力/时间预算 | 把设计落成 workflow 任务，在写码前暴露可行性瓶颈，并把 claim 映射到目标证据等级 | `research_architect_agent`（插件）/ `deep-research`（methodology）＋ 参 `configs/task_types/<任务类型>.md` | `docs/records/TASK_BRIEF.md`（候选计划） |
 | 红队（魔鬼代言＋方法学） | 对每个候选**独立找茬**：claim 可否证伪、有无泄漏、指标口径、条件是否饱和、隐藏假设、预算现实性、伦理 | 独立多视角抓人眼漏掉的设计缺陷（如指标定义里的训练-测试泄漏）；多 persona 防共识偏置 | `deep-research`（devil's-advocate、ethics 子 agent）＋ `academic-paper-reviewer`（methodology-focus 模式），**各 persona 分开打分** | `docs/records/EXPERIMENT_LOG.md`（每候选 critical/major/minor） |
 | 综合裁判 | 跨候选比对：找矛盾、辨真伪权衡、必要时提混合/分阶段方案，给出**胜出方案 ＋ 理由 ＋ 红队问题的处置** | 防在等价方案间反复横跳；确保胜方显式回应每条红队 critical | `synthesis_agent`（插件，跨源整合/矛盾/gap）＋ judge-panel 聚合 | `docs/records/TASK_BRIEF.md`（选定方案＋理由） |
-| 冻结官（预注册） | 锁定 claim 定义、**每条 claim 目标证据等级**（匹配结论强度，RESEARCH_RULES 第 11 节）、成功判据、预登记基线/消融、追踪中的假设；冻结点记 commit hash＋时间 | 防执行期"事后改 claim / 调目标等级"漂移；冻结是**人审关卡**，agent 不得自批 | `academic-paper-reviewer`（calibration 自检清单）＋ **人审** | `docs/records/TASK_BRIEF.md`（冻结块）、`docs/records/EVIDENCE.md`（claim→目标等级，定稿） |
+| 冻结官（预注册） | 锁定 claim 定义、**每条 claim 目标证据等级**（匹配结论强度，RESEARCH_RULES 第 4 节）、成功判据、预登记基线/消融、追踪中的假设；冻结点记 commit hash＋时间 | 防执行期"事后改 claim / 调目标等级"漂移；冻结是**人审关卡**，agent 不得自批 | `academic-paper-reviewer`（calibration 自检清单）＋ **人审** | `docs/records/TASK_BRIEF.md`（冻结块）、`docs/records/EVIDENCE.md`（claim→目标等级，定稿） |
 
 **内部 workflow（一轮）**
 
@@ -65,7 +65,7 @@
 **终止 / 升级**：默认 **≤ 4 轮**；连续 2 轮剩余工作量降幅 < 2 → **PLATEAU**，停并上报（多半要先补调研）；共识认定某目标等级不可达（如外部数据拿不到）→ **BLOCKED**，升级人审重定目标；满 4 轮未收敛 → 强制停、交当前最佳计划＋未决项由人定夺。
 **本环反模式**：① 设计者偏爱方案默认胜出（须由独立裁判按"红队 critical 最少＋等级最可达"裁定）；② 冻结后私改 claim/等级（属"重大变更"，须回环 1 人审，§4）；③ 红队两 persona 100% 同评（评审可疑，加第三视角或人审）；④ 留下**不可证伪**的 claim（如"预期更鲁棒"——须改成"在 `<holdout>` 上 `<指标>` ≥ `<阈值>`"）；⑤ 证据目标与结论强度不匹配（开发集等级 4 却下"鲁棒"结论）；⑥ 设计性泄漏（用测试统计做预处理）；⑦ 预算-现实差（"1 卡 1 周训 1B 模型"应判 BLOCKED 而非小问题）。
 
-> **推荐起手式 · Baseline 先行**：确定主题后，本环优先确立一个可信 baseline（复用开源实现或自训），以其为标尺，再针对 baseline 的**具体不足**或一处**方法学创新**设计候选方案——而非泛泛"做得更好"。强烈推荐、非强制，细则见 `RESEARCH_RULES.md` 第 17 节。
+> **推荐起手式 · Baseline 先行**：确定主题后，本环优先确立一个可信 baseline（复用开源实现或自训），以其为标尺，再针对 baseline 的**具体不足**或一处**方法学创新**设计候选方案——而非泛泛"做得更好"。强烈推荐、非强制，细则见 `RESEARCH_RULES.md` 第 6 节。
 
 ---
 
@@ -145,7 +145,7 @@
 
 **收敛标量**：剩余工作量 = 未决 critical/major 评审项 ＋ 引用错误数 ＋ 未绑定到 `EVIDENCE.md` 的数字 ＋ 越级 claim 数；逐轮单调下降。
 **终止 / 升级**：默认 **≤ 5 轮** 或连续 2 轮无实质改进 → 停、上报当前稿＋未决项；评审暴露**证据缺口** → **回环 2** 补实验（保留写作状态，补完再回写作）。
-**本环反模式**：claim 越级（证据等级不够却写"鲁棒/泛化/SOTA/临床可用"——RESEARCH_RULES 第 1/11 节）；编造或张冠李戴引用；并行章节记号/术语/叙事打架未整合；缺 limitations / 不报负结果；把 `PENDING`/`NOT VERIFIED` 写成既成结论；为改而改的空转修订（须对照评审清单逐条闭环）。
+**本环反模式**：claim 越级（证据等级不够却写"鲁棒/泛化/SOTA/临床可用"——RESEARCH_RULES 第 1/4 节）；编造或张冠李戴引用；并行章节记号/术语/叙事打架未整合；缺 limitations / 不报负结果；把 `PENDING`/`NOT VERIFIED` 写成既成结论；为改而改的空转修订（须对照评审清单逐条闭环）。
 
 ---
 
@@ -168,7 +168,7 @@
 
 **⑤ 防卡死与终止**：每环有**最大轮次**（4 / 8 / 5）与 **PLATEAU**（剩余工作量连续 ≥ 3 轮不降）/ **BLOCKED**（关键产出不可得）两种终止态；三环都是长自主执行，按 `CLAUDE.md` 第 14.2 节设**监察者**（~30 min 巡检，盯代码/agent/网络三类卡死），每个长步骤设超时上限，停滞即阶梯处置（重试 → 重启/回滚 → 换法 → 上报），**绝不让循环长期卡在某处不前进**。PLATEAU/BLOCKED 不在环内硬扛——带完整上下文升级人审。
 
-**⑥ 反滥用闸门**：不得在环内私自降 claim 强度 / 降目标等级（须走"重大变更"人审）；目标证据等级须匹配结论强度（强结论 ≥ 7，临床/泛化类须外部或独立证据，RESEARCH_RULES 第 11 节）；统计量未真实采样标 `NOT VERIFIED` 不得虚构；证据不足的产物即使"读着完整"仍 `PENDING`；缺证据不得编造补齐（RESEARCH_RULES 第 1 节）；交接前做**反造假核对**：每个数字有对应 artifact＋可追溯，无 claim 越级，无静默改目标等级。
+**⑥ 反滥用闸门**：不得在环内私自降 claim 强度 / 降目标等级（须走"重大变更"人审）；目标证据等级须匹配结论强度（强结论 ≥ 7，临床/泛化类须外部或独立证据，RESEARCH_RULES 第 4 节）；统计量未真实采样标 `NOT VERIFIED` 不得虚构；证据不足的产物即使"读着完整"仍 `PENDING`；缺证据不得编造补齐（RESEARCH_RULES 第 1 节）；交接前做**反造假核对**：每个数字有对应 artifact＋可追溯，无 claim 越级，无静默改目标等级。
 
 ---
 

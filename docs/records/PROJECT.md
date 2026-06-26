@@ -22,7 +22,7 @@
 
 ## 3. 数据集
 
-> 数据/权重默认不入 git，以 manifest + checksum 替代；隐私路径不写入 git。详细应记录项见 `docs/rules/RESEARCH_RULES.md` 第 6 节。
+> 数据/权重默认不入 git，以 manifest + checksum 替代；隐私路径不写入 git。详细应记录项见 `docs/rules/RESEARCH_RULES.md` 第 7 节。
 
 | 字段 | 值 |
 | --- | --- |

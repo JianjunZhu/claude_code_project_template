@@ -8,4 +8,4 @@
 |---|---|---|---|---|---|
 | `<round NN–MM>` | `<阶段 / 主题>`（TBD） | `<本阶段确立的结论>`（证据等级 TBD，NOT VERIFIED，示例行） | PENDING | `archive/round-<NN>_<主题>.md`（TBD） | TBD |
 
-> 纪律：此处摘要不得夸大或越级；结论强度须与证据等级匹配（见 [`../docs/rules/RESEARCH_RULES.md`](../docs/rules/RESEARCH_RULES.md) 第 11 节）。负结果报告同样归档，不删除。
+> 纪律：此处摘要不得夸大或越级；结论强度须与证据等级匹配（见 [`../docs/rules/RESEARCH_RULES.md`](../docs/rules/RESEARCH_RULES.md) 第 4 节）。负结果报告同样归档，不删除。
